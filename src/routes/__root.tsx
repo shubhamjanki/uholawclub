@@ -14,6 +14,7 @@ import uhoLogoImg from "../assets/WhatsApp Image 2026-07-29 at 19.28.20 (4).jpeg
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "../components/BottomNav";
 import { LegalModals, type LegalModalType } from "../components/LegalModals";
+import logo1 from "../assets/WhatsApp Image 2026-07-29 at 19.28.20 (4).jpeg";
 
 function NotFoundComponent() {
   return (
@@ -76,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: logo1, type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" },
@@ -213,24 +214,15 @@ function Header() {
             ))}
           </nav>
 
-          {/* Sub-bar Practice Area Ticker — auto-scrolling marquee */}
-          <div className="overflow-hidden py-2 relative">
-            {/* Fade edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-r from-[#0a1226] to-transparent pointer-events-none" aria-hidden />
-            <div className="absolute right-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-l from-[#0a1226] to-transparent pointer-events-none" aria-hidden />
-            <div className="flex items-center whitespace-nowrap animate-ticker hover:[animation-play-state:paused]">
-              {/* Original set */}
+          {/* Sub-bar Practice Area Ticker */}
+          <div className="overflow-x-auto py-2 scrollbar-none ">
+            <div className="flex items-center justify-start lg:justify-center gap-3 sm:gap-4 whitespace-nowrap font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-paper/70 marquee-container">
               {practiceTicker.map((item, idx) => (
-                <React.Fragment key={`a-${idx}`}>
-                  <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-paper/70 hover:text-gold transition-colors cursor-default px-3 sm:px-4">{item}</span>
-                  <span className="text-gold/60 font-bold select-none px-1">&bull;</span>
-                </React.Fragment>
-              ))}
-              {/* Duplicate for seamless loop */}
-              {practiceTicker.map((item, idx) => (
-                <React.Fragment key={`b-${idx}`}>
-                  <span aria-hidden className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-paper/70 hover:text-gold transition-colors cursor-default px-3 sm:px-4">{item}</span>
-                  <span aria-hidden className="text-gold/60 font-bold select-none px-1">&bull;</span>
+                <React.Fragment key={idx}>
+                  <span className="hover:text-gold transition-colors cursor-default">{item}</span>
+                  {idx < practiceTicker.length - 1 && (
+                    <span className="text-gold/60 font-bold select-none">&bull;</span>
+                  )}
                 </React.Fragment>
               ))}
             </div>
