@@ -438,7 +438,7 @@ function Index() {
                 <div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Address</div>
                   <div className="mt-2 font-serif text-lg text-paper leading-snug">
-                    UHO Law Club · The UHO House<br />
+                    UHO Law Club · <br />
                     Near Bundelkhand University, Jhansi<br />
                     Uttar Pradesh, India
                   </div>

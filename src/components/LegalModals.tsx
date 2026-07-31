@@ -62,7 +62,7 @@ export function LegalModals({ activeModal, onClose }: LegalModalsProps) {
               <p>
                 For questions regarding data privacy, reach out to our chambers at{" "}
                 <a href="mailto:advocateavinashpathak@gmail.com" className="text-gold underline">
-                  advocateavinashpathak@gmail.com
+                uholawclub@gmail.com
                 </a>
                 .
               </p>

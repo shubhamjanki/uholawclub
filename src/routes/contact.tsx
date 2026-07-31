@@ -61,7 +61,7 @@ function Contact() {
             <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Office</div>
             <div className="mt-4 font-serif text-2xl text-paper leading-tight">
               UHO Law Club<br />
-              The UHO House · Jhansi
+               · Jhansi
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
               Near Bundelkhand University, close to Sanjeevani ICU and Maa Kamakhya Seva, Jhansi, Uttar Pradesh.

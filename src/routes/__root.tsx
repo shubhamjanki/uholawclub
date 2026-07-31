@@ -320,12 +320,12 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
               </li>
               <li>
                 <a href="mailto:advocateavinashpathak@gmail.com" className="transition-colors hover:text-gold break-words">
-                  advocateavinashpathak@gmail.com
+                uholawclub@gmail.com
                 </a>
               </li>
               <li>
                 <a href="https://twitter.com/theUHOHouse" target="_blank" rel="noreferrer" className="transition-colors hover:text-gold">
-                  @theUHOHouse
+                  @UHOlawclub
                 </a>
               </li>
             </ul>
