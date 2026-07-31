@@ -70,7 +70,7 @@ function ContactForm() {
             <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Received</div>
             <h4 className="mt-3 font-serif text-2xl text-paper">Thank you — we have your message.</h4>
             <p className="mt-3 text-sm text-muted-foreground">
-              The chambers will respond within one working day. For urgent matters (bail, custody), call <a href="tel:+919305770340" className="text-paper hover:text-gold">+91 93057 70340</a> directly.
+              The chambers will respond within one working day. For urgent matters (bail, custody), call <a href="tel:+919305770340" className="text-paper hover:text-gold">+91 9532660984</a> directly.
             </p>
           </div>
         ) : (
@@ -450,7 +450,7 @@ function Index() {
                 </div>
                 <div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Direct line</div>
-                  <a href="tel:+919305770340" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 93057 70340</a>
+                  <a href="tel:+919305770340" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 9532660984</a>
                 </div>
                 <div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Email</div>

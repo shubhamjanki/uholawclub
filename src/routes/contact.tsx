@@ -74,7 +74,7 @@ function Contact() {
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Direct line</div>
-                <a href="tel:+919305770340" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 93057 70340</a>
+                <a href="tel:+919305770340" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 9532660984</a>
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Email</div>

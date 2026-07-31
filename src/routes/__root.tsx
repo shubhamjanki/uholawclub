@@ -315,7 +315,7 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
               <li>Jhansi, Bundelkhand, Uttar Pradesh</li>
               <li>
                 <a href="tel:+919305770340" className="transition-colors hover:text-gold">
-                  +91 93057 70340
+                  +91 9532660984
                 </a>
               </li>
               <li>
@@ -358,7 +358,7 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
   );
 }
 
-const WA_NUMBER = "919305770340";
+const WA_NUMBER = "919532660984"; // WhatsApp number in international format without '+' or dashes
 const WA_MESSAGE = encodeURIComponent(
   "Hello, I'd like to book a consultation with Adv. Avinash Pathak — UHO Law Club."
 );
