@@ -4,10 +4,15 @@ import { useState } from "react";
 export const Route = createFileRoute("/appointment")({
   head: () => ({
     meta: [
-      { title: "Book a Consultation — Advocate Avinash Pathak" },
-      { name: "description", content: "Schedule a consultation at the chambers of Advocate Avinash Pathak. Legal consultation, UHO card holder sessions, and writer engagements." },
-      { property: "og:title", content: "Book a Consultation" },
-      { property: "og:description", content: "Three ways to work with the chambers." },
+      { title: "Book Consultation | UHO Law Club (uholawclub) – Adv. Avinash Pathak" },
+      { name: "description", content: "Book a legal consultation with Advocate Avinash Pathak at UHO Law Club in Jhansi or online worldwide. Legal advice, UHO card member sessions, and retainer arrangements." },
+      { property: "og:title", content: "Book Consultation | UHO Law Club – Adv. Avinash Pathak" },
+      { property: "og:description", content: "Book an in-person or online legal consultation with Advocate Avinash Pathak at UHO Law Club." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://uholawclub.com/appointment" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://uholawclub.com/appointment" },
     ],
   }),
   component: Appointment,
@@ -72,44 +77,11 @@ function Appointment() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-16">
-        <div className="grid gap-px bg-border md:grid-cols-3">
-          {TIERS.map(t => (
-            <article key={t.label} className={`p-8 md:p-10 ${t.accent ? "bg-paper text-navy" : "bg-navy text-paper"}`}>
-              <div className={`font-mono text-[10px] uppercase tracking-[0.28em] ${t.accent ? "text-steel" : "text-gold"}`}>{t.label}</div>
-              <div className="mt-6 flex items-baseline gap-3">
-                <div className="font-serif text-5xl">{t.inr}</div>
-                <div className={`font-mono text-xs ${t.accent ? "text-navy/60" : "text-muted-foreground"}`}>/ {t.usd}</div>
-              </div>
-              <div className={`mt-1 font-mono text-[10px] uppercase tracking-[0.2em] ${t.accent ? "text-navy/60" : "text-muted-foreground"}`}>{t.per}</div>
-              <p className={`mt-6 text-sm leading-relaxed ${t.accent ? "text-navy/80" : "text-paper/80"}`}>{t.body}</p>
-              <ul className={`mt-6 space-y-2 text-sm ${t.accent ? "text-navy/85" : "text-paper/85"}`}>
-                {t.features.map(f => (
-                  <li key={f} className="flex gap-3">
-                    <span className={t.accent ? "text-steel" : "text-gold"}>—</span>{f}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="#book"
-                className={`mt-10 inline-flex w-full items-center justify-center px-5 py-3 text-sm ${t.accent ? "bg-navy text-paper hover:bg-midnight" : "border border-paper/40 hover:bg-paper hover:text-navy"}`}
-              >
-                Request this appointment →
-              </a>
-            </article>
-          ))}
-        </div>
-      </section>
-
       {/* FORM */}
       <section id="book" className="border-t border-border bg-midnight">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:grid-cols-12">
           <div className="md:col-span-5">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">Book</p>
-            <h2 className="mt-3 font-serif text-4xl text-paper">A short note is enough to start.</h2>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              You do not need a lawyer to write like a lawyer. Tell us in plain language what has happened, or what you are considering. We reply within one working day.
-            </p>
+
             <div className="mt-10 space-y-4 text-sm">
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Direct line</div>
@@ -167,11 +139,77 @@ function Appointment() {
                   <textarea name="note" rows={5} required className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none" />
                 </div>
                 <button type="submit" className="mt-2 inline-flex items-center justify-center bg-paper px-6 py-3 text-sm text-navy hover:bg-gold">
-                  Send request →
+                  Book Appointment →
                 </button>
                 <p className="text-[11px] text-muted-foreground">Your note is confidential and not shared with third parties.</p>
               </form>
             )}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 pb-16">
+        <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">Our services</p>
+            <h2 className="mt-3 font-serif text-3xl text-paper sm:text-4xl">Choose the format that fits your matter.</h2>
+          </div>
+          <p className="max-w-xl text-sm leading-relaxed text-paper/70">
+            Whether you need a focused legal consultation, a community-rate session, or a commissioned writing engagement, we can help you begin with a clear next step.
+          </p>
+        </div>
+        <div className="grid gap-px bg-border md:grid-cols-3">
+          {TIERS.map(t => (
+            <article key={t.label} className={`p-8 md:p-10 ${t.accent ? "bg-paper text-navy" : "bg-navy text-paper"}`}>
+              <div className={`font-mono text-[10px] uppercase tracking-[0.28em] ${t.accent ? "text-steel" : "text-gold"}`}>{t.label}</div>
+              <div className="mt-6 flex items-baseline gap-3">
+                <div className="font-serif text-5xl">{t.inr}</div>
+                <div className={`font-mono text-xs ${t.accent ? "text-navy/60" : "text-muted-foreground"}`}>/ {t.usd}</div>
+              </div>
+              <div className={`mt-1 font-mono text-[10px] uppercase tracking-[0.2em] ${t.accent ? "text-navy/60" : "text-muted-foreground"}`}>{t.per}</div>
+              <p className={`mt-6 text-sm leading-relaxed ${t.accent ? "text-navy/80" : "text-paper/80"}`}>{t.body}</p>
+              <ul className={`mt-6 space-y-2 text-sm ${t.accent ? "text-navy/85" : "text-paper/85"}`}>
+                {t.features.map(f => (
+                  <li key={f} className="flex gap-3">
+                    <span className={t.accent ? "text-steel" : "text-gold"}>—</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="#book"
+                className={`mt-10 inline-flex w-full items-center justify-center px-5 py-3 text-sm ${t.accent ? "bg-navy text-paper hover:bg-midnight" : "border border-paper/40 hover:bg-paper hover:text-navy"}`}
+              >
+                Request this appointment →
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 pb-16">
+        <div className="rounded-2xl border border-border bg-navy/60 p-8 md:p-10">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">Social links</p>
+              <h2 className="mt-3 font-serif text-3xl text-paper">Stay connected with the chambers.</h2>
+            </div>
+            <p className="max-w-xl text-sm leading-relaxed text-paper/70">
+              Follow updates, public writing, and UHO announcements through the channels below.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            <a href="https://twitter.com/theUHOHouse" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
+              <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">X / Twitter</div>
+              <div className="mt-2">@theUHOHouse</div>
+            </a>
+            <a href="https://instagram.com/theuhohouse" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
+              <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Instagram</div>
+              <div className="mt-2">@theuhohouse</div>
+            </a>
+            <a href="https://wa.me/919532660984" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
+              <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">WhatsApp</div>
+              <div className="mt-2">Book instantly</div>
+            </a>
           </div>
         </div>
       </section>

@@ -3,10 +3,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/practice")({
   head: () => ({
     meta: [
-      { title: "Practice Areas — Advocate Avinash Pathak" },
-      { name: "description", content: "Practice areas at UHO Law Club: criminal defence, corporate advisory, constitutional and human-rights litigation before the Supreme Court and High Courts." },
-      { property: "og:title", content: "Practice Areas — UHO Law Club" },
-      { property: "og:description", content: "Criminal, corporate, constitutional and advisory work." },
+      { title: "Practice Areas & Legal Counsel in Jhansi | UHO Law Club – Adv. Avinash Pathak" },
+      { name: "description", content: "Comprehensive practice areas in Jhansi: criminal defence, bail matters, corporate & commercial advisory, constitutional writs before Allahabad High Court & Supreme Court." },
+      { property: "og:title", content: "Practice Areas & Legal Counsel in Jhansi | UHO Law Club – Adv. Avinash Pathak" },
+      { property: "og:description", content: "Criminal defence, corporate contracts, constitutional rights, and legal retainer services in Jhansi." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://uholawclub.com/practice" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://uholawclub.com/practice" },
     ],
   }),
   component: Practice,

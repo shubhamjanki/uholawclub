@@ -5,10 +5,15 @@ import founderAsset from "../assets/portrait-uho-tee.jpeg.asset.json";
 export const Route = createFileRoute("/initiatives")({
   head: () => ({
     meta: [
-      { title: "Initiatives — United Human Organization" },
-      { name: "description", content: "The civic initiatives of Avinash Pathak — United Human Organization, Green Bharat Great Bharat, Saturday for Society, and Pathak Temple Martial Arts Monastery." },
-      { property: "og:title", content: "UHO Initiatives" },
-      { property: "og:description", content: "We the Human of Earth — civic work beyond the courtroom." },
+      { title: "Civic Initiatives | UHO Law Club & United Human Organization" },
+      { name: "description", content: "Civic and environmental initiatives of Advocate Avinash Pathak and UHO Law Club (uholawclub) — Green Bharat Great Bharat, Mission 8 Billion, and Saturday for Society." },
+      { property: "og:title", content: "Civic Initiatives | UHO Law Club & United Human Organization" },
+      { property: "og:description", content: "Green Bharat Great Bharat, Saturday for Society, and UHO initiatives beyond the courtroom." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://uholawclub.com/initiatives" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://uholawclub.com/initiatives" },
     ],
   }),
   component: Initiatives,

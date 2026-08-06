@@ -3,10 +3,15 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/books")({
   head: () => ({
     meta: [
-      { title: "Writings — Nineteen Books by Avinash Pathak" },
-      { name: "description", content: "The bibliography of Avinash Pathak — nineteen books across ecology, jurisprudence, civic philosophy and the Aryan Dream series." },
-      { property: "og:title", content: "Writings by Avinash Pathak" },
-      { property: "og:description", content: "Writer to live for Earth — nineteen books, thirteen years." },
+      { title: "Books & Legal Writings | Adv. Avinash Pathak – UHO Law Club" },
+      { name: "description", content: "Explore 19 books authored by Advocate Avinash Pathak of UHO Law Club (uholawclub) covering ecology, jurisprudence, civic philosophy, and law." },
+      { property: "og:title", content: "Books & Legal Writings | Adv. Avinash Pathak – UHO Law Club" },
+      { property: "og:description", content: "Bibliography of Avinash Pathak — 19 books across legal jurisprudence and civic philosophy." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://uholawclub.com/books" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://uholawclub.com/books" },
     ],
   }),
   component: Books,

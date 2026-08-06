@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect, useRef } from "react";
 import portraitAsset from "../assets/portrait-buttoning.jpeg.asset.json";
 import library from "../assets/library.jpg";
 import advocateImg3 from "../assets/WhatsApp Image 2026-07-29 at 19.28.20 (3).jpeg"
@@ -6,14 +7,40 @@ import advocateImg3 from "../assets/WhatsApp Image 2026-07-29 at 19.28.20 (3).jp
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Advocate Avinash Pathak" },
-      { name: "description", content: "The biography, philosophy and milestones of Adv. Avinash Pathak — advocate, writer and founder of the United Human Organization." },
-      { property: "og:title", content: "About Advocate Avinash Pathak" },
-      { property: "og:description", content: "Advocate, writer, and founder of the UHO Law Club." },
+      { title: "About Adv. Avinash Pathak | UHO Law Club" },
+      { name: "description", content: "Learn about Advocate Avinash Pathak — legal background, bar practice before High Courts & Supreme Court, books published, and founding of United Human Organization." },
+      { property: "og:title", content: "About Adv. Avinash Pathak | UHO Law Club" },
+      { property: "og:description", content: "Advocate, writer, and founder of the UHO Law Club in Jhansi." },
+      { property: "og:type", content: "profile" },
+      { property: "og:url", content: "https://uholawclub.com/about" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://uholawclub.com/about" },
     ],
   }),
   component: About,
 });
+
+const SOCIALS = [
+  {
+    name: "Twitter",
+    handle: "@theUHOHouse",
+    url: "https://twitter.com/theUHOHouse",
+    desc: "Daily commentary on law, constitutional rights, and public notices from the chambers."
+  },
+  {
+    name: "Instagram",
+    handle: "@theuhohouse",
+    url: "https://instagram.com/theuhohouse",
+    desc: "Behind the scenes in chambers, civic action events, and photos from tree plantation drives."
+  },
+  {
+    name: "WhatsApp",
+    handle: "+91 9532660984",
+    url: "https://wa.me/919532660984",
+    desc: "Direct line to book legal consultations and reach the office in Jhansi."
+  },
+];
 
 const TIMELINE = [
   { year: "1997", title: "Born in Bundelkhand", body: "Roots in Lalitpur, Uttar Pradesh — a childhood shaped by the region's history and its unresolved questions." },
@@ -21,6 +48,69 @@ const TIMELINE = [
   { year: "2020 – 2023", title: "Founded UHO Law Club", body: "Established chambers in Jhansi. First matters before the District Court and Allahabad High Court." },
   { year: "2023 – Now", title: "Supreme Court practice", body: "Regular appearances before the Supreme Court of India. Standing counsel for United Human Organization." },
 ];
+
+function useInView() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setInView(true); obs.disconnect(); }
+    }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return { ref, inView };
+}
+
+function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const { ref, inView } = useInView();
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0)" : "translateY(28px)",
+        transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function SocialIcon({ name }: { name: string }) {
+  if (name === "Twitter") {
+    return (
+      <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    );
+  }
+  if (name === "Instagram") {
+    return (
+      <svg className="h-5 w-5 fill-none stroke-current" strokeWidth="2" viewBox="0 0 24 24">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      </svg>
+    );
+  }
+  if (name === "WhatsApp") {
+    return (
+      <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+      </svg>
+    );
+  }
+  return (
+    <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+    </svg>
+  );
+}
 
 function About() {
   return (
@@ -79,6 +169,44 @@ function About() {
           </div>
         </div>
       </section>
+
+      {/* SOCIAL MEDIA */}
+      <section className="paper-section border-y border-border">
+        <div className="mx-auto max-w-7xl px-6 py-24">
+          <FadeIn>
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-steel">Connect</p>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-navy">Follow the work.</h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-midnight/80">
+              Join the conversation across platforms — daily notes from court, essays on justice, and the movements growing out of Bundelkhand.
+            </p>
+          </FadeIn>
+
+          <div className="mt-12 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+            {SOCIALS.map((s, i) => (
+              <FadeIn key={s.name} delay={i * 80} className="group bg-paper transition-colors hover:bg-navy/[0.03]">
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Visit ${s.name} profile`}
+                  className="block h-full p-8"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center border border-navy/20 text-navy transition-colors group-hover:border-gold group-hover:text-gold">
+                    <SocialIcon name={s.name} />
+                  </div>
+                  <h3 className="mt-6 font-serif text-2xl text-navy">{s.name}</h3>
+                  <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-steel">{s.handle}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-midnight/80">{s.desc}</p>
+                  <span className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-navy/60 transition-colors group-hover:text-gold">
+                    Visit profile →
+                  </span>
+                </a>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       {/* UHO HISTORY */}
       <section className="mx-auto max-w-7xl px-6 py-24">

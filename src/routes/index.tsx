@@ -1,18 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
-import portraitAsset from "../assets/portrait-robes.jpeg.asset.json";
-import portraitFullAsset from "../assets/portrait-full.jpeg.asset.json";
 import tree from "../assets/tree.jpg";
-import logoAsset from "../assets/logo-uho.jpeg.asset.json";
-import advocateImg from "../assets/WhatsApp Image 2026-07-29 at 19.28.21 (2).jpeg";
-import advocateImg2 from "../assets/WhatsApp Image 2026-07-29 at 19.28.22.jpeg"
+import advocateImg2 from "../assets/WhatsApp Image 2026-07-29 at 19.28.22.jpeg";
+import { useLanguage } from "../lib/LanguageContext";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Advocate Avinash Pathak — Chambers in Jhansi" },
-      { name: "description", content: "Counsel with conviction. Advocacy with conscience. Practice before the Supreme Court of India and High Courts from Jhansi." },
-      { property: "og:title", content: "Advocate Avinash Pathak" },
-      { property: "og:description", content: "Counsel with conviction. Advocacy with conscience." },
+      { title: "UHO Law Club | Adv. Avinash Pathak – Jhansi Law Firm" },
+      { name: "description", content: "Chambers of Advocate Avinash Pathak in Jhansi. Expert legal representation in criminal defence, corporate advisory, and constitutional law before High Courts & Supreme Court." },
+      { property: "og:title", content: "UHO Law Club | Adv. Avinash Pathak – Jhansi Law Firm" },
+      { property: "og:description", content: "Counsel with conviction. Advocacy with conscience. Chambers based in Jhansi, practising before the Supreme Court and High Courts." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://uholawclub.com/" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://uholawclub.com/" },
     ],
   }),
   component: Index,
@@ -52,53 +55,54 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
 
 function ContactForm() {
   const [sent, setSent] = useState(false);
+  const { t } = useLanguage();
   return (
     <div className="grid gap-px bg-border md:grid-cols-12">
       <div className="bg-navy p-8 md:col-span-4 flex flex-col justify-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Write In</p>
-        <h3 className="mt-3 font-serif text-2xl text-paper">Send us a message.</h3>
+        <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">{t("contact.writeIn")}</p>
+        <h3 className="mt-3 font-serif text-2xl text-paper">{t("contact.sendMessage")}</h3>
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-          Describe your matter in plain language. No legal jargon needed — we reply within one working day.
+          {t("contact.writeInDesc")}
         </p>
         <p className="mt-6 text-xs text-muted-foreground">
-          Your message is confidential and not shared with third parties.
+          {t("contact.writeInConf")}
         </p>
       </div>
       <div className="bg-midnight p-8 md:col-span-8">
         {sent ? (
           <div className="flex h-full flex-col justify-center py-4">
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Received</div>
-            <h4 className="mt-3 font-serif text-2xl text-paper">Thank you — we have your message.</h4>
+            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">{t("form.received")}</div>
+            <h4 className="mt-3 font-serif text-2xl text-paper">{t("form.thankYou")}</h4>
             <p className="mt-3 text-sm text-muted-foreground">
-              The chambers will respond within one working day. For urgent matters (bail, custody), call <a href="tel:+919305770340" className="text-paper hover:text-gold">+91 9532660984</a> directly.
+              {t("form.thankYouDesc")} <a href="tel:+919532660984" className="text-paper hover:text-gold">+91 9532660984</a> {t("form.thankYouSuffix")}
             </p>
           </div>
         ) : (
           <form onSubmit={e => { e.preventDefault(); setSent(true); }} className="grid gap-5">
             <div className="grid gap-5 sm:grid-cols-2">
-              <FormField label="Your name" name="name" required />
-              <FormField label="Email" name="email" type="email" required />
+              <FormField label={t("form.name")} name="name" required />
+              <FormField label={t("form.email")} name="email" type="email" required />
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
-              <FormField label="Phone / WhatsApp" name="phone" type="tel" />
-              <FormField label="Country" name="country" placeholder="e.g. India, UK, UAE" />
+              <FormField label={t("form.phone")} name="phone" type="tel" />
+              <FormField label={t("form.country")} name="country" placeholder={t("form.countryPlaceholder")} />
             </div>
-            <FormField label="Subject" name="subject" />
+            <FormField label={t("contact.subject")} name="subject" />
             <div>
-              <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Your message</label>
+              <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.yourMessage")}</label>
               <textarea
                 name="message"
                 rows={4}
                 required
                 className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none"
-                placeholder="Tell us about your matter in plain language…"
+                placeholder={t("contact.messagePlaceholder")}
               />
             </div>
             <button
               type="submit"
               className="inline-flex w-fit items-center gap-2 bg-paper px-6 py-3 text-sm text-navy hover:bg-gold transition-colors"
             >
-              Send message →
+              Book Appointment
             </button>
           </form>
         )}
@@ -135,100 +139,297 @@ function Stat({ n, label }: { n: string; label: string }) {
   );
 }
 
-const AREAS = [
-  { n: "01", title: "Criminal Defence", desc: "Bail, trial and appellate representation in criminal matters across sessions and superior courts." },
-  { n: "02", title: "Corporate & Commercial", desc: "Advisory and contentious work for founders, family businesses and industry across Bundelkhand." },
-  { n: "03", title: "Constitutional & Rights", desc: "Writ petitions, PILs and human-rights matters before High Courts and the Supreme Court." },
-  { n: "04", title: "Advisory & Retainer", desc: "Standing counsel arrangements for institutions, trusts and non-profit organizations." },
-];
+function BookingForm() {
+  const [sent, setSent] = useState(false);
+  const { t } = useLanguage();
+
+  if (sent) {
+    return (
+      <div className="border border-gold/50 bg-navy p-8">
+        <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">{t("form.received")}</div>
+        <h3 className="mt-4 font-serif text-2xl text-paper">{t("form.thankYou")}</h3>
+        <p className="mt-3 text-sm text-muted-foreground">
+          {t("form.thankYouDesc")} <a href="tel:+919532660984" className="text-paper hover:text-gold">+91 9532660984</a> {t("form.thankYouSuffix")}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    // <form
+    //   onSubmit={e => { e.preventDefault(); setSent(true); }}
+    //   className="grid gap-5"
+    // >
+    //   <div className="grid gap-5 sm:grid-cols-2">
+    //     <FormField label={t("form.name")} name="name" required />
+    //     <FormField label={t("form.email")} name="email" type="email" required />
+    //   </div>
+    //   <div className="grid gap-5 sm:grid-cols-2">
+    //     <FormField label={t("form.phone")} name="phone" type="tel" />
+    //     <FormField label={t("form.date")} name="date" type="date" />
+    //   </div>
+    //   <div>
+    //     <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("form.mode")}</label>
+    //     <select name="mode" className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none">
+    //       <option>{t("form.modeOnline")}</option>
+    //       <option>{t("form.modeInPerson")}</option>
+    //       <option>{t("form.modePhone")}</option>
+    //     </select>
+    //   </div>
+    //   <div>
+    //     <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("form.country")}</label>
+    //     <input name="country" type="text" placeholder={t("form.countryPlaceholder")} className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none" />
+    //   </div>
+    //   <div>
+    //     <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("form.tier")}</label>
+    //     <select name="tier" className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none">
+    //       <option>{t("form.tierLegal")}</option>
+    //       <option>{t("form.tierUHO")}</option>
+    //       <option>{t("form.tierWriter")}</option>
+    //       <option>{t("form.tierUnsure")}</option>
+    //     </select>
+    //   </div>
+    //   <div>
+    //     <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("form.note")}</label>
+    //     <textarea name="note" rows={4} required placeholder={t("form.notePlaceholder")} className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none" />
+    //   </div>
+    //   <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+    //     <button type="submit" className="inline-flex items-center justify-center bg-paper px-6 py-3 text-sm text-navy hover:bg-gold transition-colors">
+    //       {t("form.submit")}
+    //     </button>
+    //     <p className="text-[11px] text-muted-foreground">{t("form.confidential")}</p>
+    //   </div>
+    // </form>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setSent(true);
+      }}
+      className="space-y-4"
+    >
+      {/* Name & Email */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <FormField
+          label={t("form.name")}
+          name="name"
+          required
+        />
+
+        <FormField
+          label={t("form.email")}
+          name="email"
+          type="email"
+          required
+        />
+      </div>
+
+      {/* Phone & Date */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <FormField
+          label={t("form.phone")}
+          name="phone"
+          type="tel"
+        />
+
+        <FormField
+          label={t("form.date")}
+          name="date"
+          type="date"
+        />
+      </div>
+
+      {/* Mode */}
+      <div>
+        <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+          {t("form.mode")}
+        </label>
+
+        <select
+          name="mode"
+          className="w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none"
+        >
+          <option>{t("form.modeOnline")}</option>
+          <option>{t("form.modeInPerson")}</option>
+          <option>{t("form.modePhone")}</option>
+        </select>
+      </div>
+
+      {/* Country + Service */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <div>
+          <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            {t("form.country")}
+          </label>
+
+          <input
+            name="country"
+            type="text"
+            placeholder={t("form.countryPlaceholder")}
+            className="w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+            {t("form.tier")}
+          </label>
+
+          <select
+            name="tier"
+            className="w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none"
+          >
+            <option>{t("form.tierLegal")}</option>
+            <option>{t("form.tierUHO")}</option>
+            <option>{t("form.tierWriter")}</option>
+            <option>{t("form.tierUnsure")}</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Note */}
+      <div>
+        <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+          {t("form.note")}
+        </label>
+
+        <textarea
+          name="note"
+          rows={3}
+          required
+          placeholder={t("form.notePlaceholder")}
+          className="w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none"
+        />
+      </div>
+
+      {/* Button */}
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <p className="text-[11px] text-muted-foreground">
+          {t("form.confidential")}
+        </p>
+
+        <button
+          type="submit"
+          className="inline-flex items-center justify-center bg-paper px-8 py-3 text-sm font-medium text-navy transition hover:bg-gold"
+        >
+          {t("form.submit")}
+        </button>
+      </div>
+    </form>
+  );
+}
 
 function Index() {
+  const { t } = useLanguage();
+
+  const AREAS = [
+    { n: "01", title: t("practice.01.title"), desc: t("practice.01.desc") },
+    { n: "02", title: t("practice.02.title"), desc: t("practice.02.desc") },
+    { n: "03", title: t("practice.03.title"), desc: t("practice.03.desc") },
+    { n: "04", title: t("practice.04.title"), desc: t("practice.04.desc") },
+  ];
+
   return (
     <>
-      {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 pb-20 pt-14 lg:grid-cols-12 lg:gap-8 lg:pt-24">
-          <div className="lg:col-span-7 flex flex-col justify-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">
-              Advocate · Supreme Court & High Courts
-            </p>
-            <h1 className="mt-6 font-serif text-[clamp(2.5rem,6vw,5rem)] leading-[1.02] tracking-tight text-paper">
-              Counsel with conviction.<br />
-              <em className="text-gold/90">Advocacy</em> with conscience.
-            </h1>
-            <p className="mt-8 max-w-xl text-base leading-relaxed text-paper/75">
-              Chambers of <span className="text-paper">Adv. Avinash Pathak</span> — eight years at the bar, thirteen years at the writing desk. Based in Jhansi; appearing before the Supreme Court and High Courts. <span className="text-paper">Online consultations available worldwide.</span>
-            </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Link
-                to="/appointment"
-                className="group inline-flex items-center gap-3 bg-paper px-6 py-3 text-sm font-medium text-navy transition-colors hover:bg-gold"
-              >
-                Book a consultation
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </Link>
-              <Link
-                to="/practice"
-                className="inline-flex items-center gap-2 border-b border-paper/40 pb-1 text-sm text-paper/80 transition-colors hover:border-paper hover:text-paper"
-              >
-                View the practice
-              </Link>
-            </div>
+      {/* BOOK APPOINTMENT FORM — top of page */}
+      <section className="border-b border-border bg-midnight">
 
-            <div className="mt-14 grid grid-cols-2 gap-6 sm:grid-cols-4">
-              <Stat n="8+" label="Yrs at the bar" />
-              <Stat n="19+" label="Books authored" />
-              <Stat n="46" label="Districts covered" />
-              <Stat n="2020" label="UHO founded" />
-            </div>
+        <div className="mx-auto grid max-w-7xl gap-px bg-border px-0 md:grid-cols-12">
+          {/* Left — booking form */}
+          <div className="bg-navy/60 p-8 md:col-span-8">
+            <BookingForm />
           </div>
 
-          <div className="lg:col-span-5 relative mt-4 lg:mt-0">
-            <div className="relative">
-              <div className="absolute -inset-4 border border-border hidden sm:block" aria-hidden />
-              <img
-                src={advocateImg}
-                alt="Advocate Avinash Pathak"
-                width={1024}
-                height={1280}
-                className="relative w-full grayscale-[.15] contrast-[1.05] max-h-[70vh] object-cover object-top lg:max-h-none"
-              />
-              <div className="absolute -bottom-4 -left-0 sm:-bottom-6 sm:-left-6 bg-navy px-4 py-3 border border-border">
-                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">In Chambers</div>
-                <div className="mt-1 font-serif text-base sm:text-lg text-paper">Avinash Pathak</div>
-                <div className="font-mono text-[10px] text-gold">Advocate · Writer · Founder, UHO</div>
+          {/* Right — appointment info */}
+          <div className="bg-navy p-8 md:col-span-4 flex flex-col justify-between">
+            <div className="mx-auto max-w-7xl px-6 pt-14 pb-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">
+                {t("booking.tag")}
+              </p>
+              <h1 className="mt-4 max-w-3xl font-serif text-[clamp(1rem,2vw,2.5rem)] leading-[1.08] tracking-tight text-paper">
+                {t("booking.title")}
+              </h1>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-paper/70">
+                {t("booking.subtitle")}
+              </p>
+            </div>
+
+            <div className="mt-8 space-y-5 text-sm">
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                  {t("booking.sidebar.directLine")}
+                </div>
+                <a
+                  href="tel:+919532660984"
+                  className="mt-1 block font-serif text-lg text-paper hover:text-gold"
+                >
+                  +91 9532660984
+                </a>
+              </div>
+
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                  {t("booking.sidebar.email")}
+                </div>
+                <a
+                  href="mailto:advocateavinashpathak@gmail.com"
+                  className="mt-1 block text-paper/85 hover:text-gold break-words"
+                >
+                  advocateavinashpathak@gmail.com
+                </a>
+              </div>
+
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                  {t("booking.sidebar.whatsapp")}
+                </div>
+                <a
+                  href="https://wa.me/919532660984"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-1 block text-paper/85 hover:text-gold"
+                >
+                  {t("booking.sidebar.whatsappCta")}
+                </a>
+              </div>
+
+              <div className="mt-6 grid grid-cols-2 gap-4 pt-4 border-t border-border">
+                <Stat n="8+" label={t("stat.yrs")} />
+                <Stat n="19+" label={t("stat.books")} />
+                <Stat n="46" label={t("stat.districts")} />
+                <Stat n="2020" label={t("stat.founded")} />
               </div>
             </div>
           </div>
         </div>
-
-        {/* Credentials strip */}
-        <div className="border-y border-border">
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-10 gap-y-3 px-6 py-5 font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-            <span>Supreme Court of India</span>
-            <span className="text-steel">·</span>
-            <span>Allahabad High Court</span>
-            <span className="text-steel">·</span>
-            <span>District Court Jhansi</span>
-            <span className="text-steel">·</span>
-            <span>Bar Council of U.P.</span>
-            <span className="text-steel">·</span>
-            <span>UHO Law Club Asia</span>
-            <span className="text-steel">·</span>
-            <span className="text-gold">Online · Worldwide</span>
-          </div>
-        </div>
       </section>
 
+
+      {/* Credentials strip */}
+      < div className="border-y border-border" >
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-10 gap-y-3 px-6 py-5 font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+          <span>{t("cred.supreme")}</span>
+          <span className="text-steel">·</span>
+          <span>{t("cred.highCourt")}</span>
+          <span className="text-steel">·</span>
+          <span>{t("cred.district")}</span>
+          <span className="text-steel">·</span>
+          <span>{t("cred.barCouncil")}</span>
+          <span className="text-steel">·</span>
+          <span>{t("cred.uhoClub")}</span>
+          <span className="text-steel">·</span>
+          <span className="text-gold">{t("cred.online")}</span>
+        </div>
+      </div >
+
       {/* PRACTICE AREAS */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      < section className="mx-auto max-w-7xl px-6 py-24" >
         <div className="flex items-end justify-between gap-8 border-b border-border pb-6">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">Practice</p>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">Areas of counsel</h2>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{t("practice.tag")}</p>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">{t("practice.title")}</h2>
           </div>
           <Link to="/practice" className="hidden md:inline-flex items-center gap-2 text-sm text-paper/70 hover:text-paper">
-            All practice areas →
+            {t("practice.viewAll")}
           </Link>
         </div>
         <div className="mt-10 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
@@ -244,33 +445,88 @@ function Index() {
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{a.desc}</p>
               </div>
               <div className="mt-8 font-mono text-[11px] uppercase tracking-[0.2em] text-paper/60 transition-colors group-hover:text-gold">
-                Explore →
+                {t("practice.explore")}
               </div>
             </Link>
           ))}
         </div>
+        </section >
+
+      {/* SOCIAL MEDIA */}
+      <section className="border-y border-border bg-paper">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <FadeIn>
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-steel">Connect</p>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-navy">Follow the work.</h2>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-midnight/70">
+              Join the conversation across platforms — daily notes from court, essays on justice, and the movements growing out of Bundelkhand.
+            </p>
+          </FadeIn>
+
+          <div className="mt-12 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { name: "Twitter", handle: "@theUHOHouse", url: "https://twitter.com/theUHOHouse", desc: "Daily commentary on law, constitutional rights, and public notices from the chambers." },
+              { name: "Instagram", handle: "@theuhohouse", url: "https://instagram.com/theuhohouse", desc: "Behind the scenes in chambers, civic action events, and photos from tree plantation drives." },
+              { name: "WhatsApp", handle: "+91 9532660984", url: "https://wa.me/919532660984", desc: "Direct line to book legal consultations and reach the office in Jhansi." },
+            ].map((s, i) => (
+              <FadeIn key={s.name} delay={i * 80} className="group bg-paper transition-colors hover:bg-navy/[0.04]">
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Visit ${s.name} profile`}
+                  className="block h-full p-8"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center border border-navy/20 text-navy transition-colors group-hover:border-gold group-hover:text-gold">
+                    {s.name === "Twitter" && (
+                      <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    )}
+                    {s.name === "Instagram" && (
+                      <svg className="h-5 w-5 fill-none stroke-current" strokeWidth="2" viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                      </svg>
+                    )}
+                     {s.name === "WhatsApp" && (
+                      <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                      </svg>
+                    )}
+                  </div>
+                  <h3 className="mt-6 font-serif text-2xl text-navy">{s.name}</h3>
+                  <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-steel">{s.handle}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-midnight/70">{s.desc}</p>
+                  <span className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-navy/50 transition-colors group-hover:text-gold">
+                    Visit profile →
+                  </span>
+                </a>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* UHO HISTORY — animated chapters */}
-      <section className="border-y border-border bg-midnight overflow-hidden">
+      < section className="border-y border-border bg-midnight overflow-hidden" >
         <div className="mx-auto max-w-7xl px-6 py-20">
 
           {/* Header */}
           <FadeIn className="mb-14 border-b border-border pb-10">
-            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">History</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">{t("history.tag")}</p>
             <h2 className="mt-3 font-serif text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] text-paper">
-              The United Human Organization.
+              {t("history.title")}
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-paper/65">
-              From a single legal practice in Jhansi to a global network of advocacy, law and
-              environmental action — the story of UHO is the story of one conviction held long
-              enough to become a movement.
+              {t("history.desc")}
             </p>
             <Link
               to="/about"
               className="mt-6 inline-flex items-center gap-2 border-b border-paper/40 pb-1 text-sm text-paper/70 hover:text-paper hover:border-paper"
             >
-              Read the full history →
+              {t("history.readFull")}
             </Link>
           </FadeIn>
 
@@ -279,34 +535,34 @@ function Index() {
             {[
               {
                 n: "01",
-                title: "Foundation",
+                title: t("history.ch01.title"),
                 period: "2020",
-                left: "The United Human Organization was founded in 2020 by Advocate Avinash Pathak with a single, uncompromising vision: to unite humanity through the instruments of law, peace, and sustainability.",
-                right: "Where most legal organizations are defined by their practice areas, UHO was conceived as something broader — a platform where jurisprudence meets civic responsibility, and where every legal act carries a social consequence. The founding tagline captures it simply:",
-                quote: "\u201cWe the Human of Earth.\u201d",
+                left: t("history.ch01.left"),
+                right: t("history.ch01.right"),
+                quote: t("history.ch01.quote"),
               },
               {
                 n: "02",
-                title: "Early Years",
+                title: t("history.ch02.title"),
                 period: "2017 – 2020",
-                left: "During his years at ALS, Avinash Pathak was simultaneously advising over 119 brands across sectors — an extraordinary volume of commercial legal work that forged a global legal perspective early.",
-                right: "Parallel to the legal work, thirteen years of continuous authorship produced nineteen books spanning ecology, jurisprudence, history and civic philosophy — not separate from the law, but the long form of the same argument.",
+                left: t("history.ch02.left"),
+                right: t("history.ch02.right"),
                 quote: null,
               },
               {
                 n: "03",
-                title: "UHO Law Club",
+                title: t("history.ch03.title"),
                 period: "2020 – 2023",
-                left: "The UHO Law Club was formally established — a legal network designed to make quality counsel accessible beyond traditional fee structures. Chambers opened in Jhansi, expanding to five offices worldwide by 2023.",
-                right: "A signature feature from the start: the UHO Card, granting members access to legal consultation at a community rate. Practice grew from District Court Jhansi to the Allahabad High Court and the Supreme Court of India.",
+                left: t("history.ch03.left"),
+                right: t("history.ch03.right"),
                 quote: null,
               },
               {
                 n: "04",
-                title: "Global Advocacy",
+                title: t("history.ch04.title"),
                 period: "2020 – Present",
-                left: "UHO Mission 8 Billion asks every person to plant a tree on their birthday. The Great Aryan Dream and World Peace Treaty 2023 propose a framework for international civic reconciliation.",
-                right: "Green Bharat Great Bharat combines tree planting, river clean-up advocacy, and civic education — rooted in Bundelkhand but reaching across India's districts and beyond.",
+                left: t("history.ch04.left"),
+                right: t("history.ch04.right"),
                 quote: null,
               },
             ].map((ch, i) => (
@@ -334,74 +590,74 @@ function Index() {
           <FadeIn delay={320} className="mt-px bg-navy border border-border/60 px-8 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="h-px w-8 bg-gold shrink-0" />
-              <p className="font-serif text-xl text-paper italic">"We the Human of Earth."</p>
+              <p className="font-serif text-xl text-paper italic">{t("history.motto")}</p>
             </div>
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground shrink-0">
-              UHO · Est. 2020 · Jhansi, India
+              {t("history.est")}
             </p>
           </FadeIn>
         </div>
-      </section>
+      </section >
 
       {/* PHILOSOPHY / PULL QUOTE */}
-      <section className="paper-section">
+      < section className="paper-section" >
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:grid-cols-12">
           <div className="md:col-span-5">
             <img src={advocateImg2} alt="Advocate Avinash Pathak outside the court" width={1280} height={1920} loading="lazy" className="w-full object-cover" />
           </div>
           <div className="md:col-span-7 flex flex-col justify-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-steel">The Chambers</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-steel">{t("philosophy.tag")}</p>
             <blockquote className="mt-6 font-serif text-3xl leading-[1.25] md:text-4xl text-navy">
-              "Law is not a profession I chose to earn from. It is an instrument — used well, it protects the smallest voice; used badly, it silences the loudest. My chambers exist for the former."
+              {t("philosophy.quote")}
             </blockquote>
-            <div className="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-midnight">— Avinash Pathak</div>
+            <div className="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-midnight">{t("philosophy.author")}</div>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link to="/about" className="inline-flex items-center gap-3 bg-navy px-6 py-3 text-sm text-paper hover:bg-midnight">
-                Read the biography →
+                {t("philosophy.bio")}
               </Link>
               <Link to="/books" className="inline-flex items-center gap-2 border-b border-navy/40 pb-1 text-sm text-navy hover:border-navy">
-                Explore the writings
+                {t("philosophy.writings")}
               </Link>
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* INITIATIVES */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      < section className="mx-auto max-w-7xl px-6 py-24" >
         <div className="grid gap-12 md:grid-cols-2">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">Beyond the courtroom</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{t("initiatives.tag")}</p>
             <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">
-              A practice that plants trees, publishes books, and organises Saturdays.
+              {t("initiatives.title")}
             </h2>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-              The United Human Organization is the civic arm of these chambers — running <em>Green Bharat Great Bharat</em>, the <em>Saturday for Society</em> movement, and the <em>Pathak Temple Martial Arts Monastery</em>. Advocacy, in its widest sense.
+              {t("initiatives.desc")}
             </p>
             <Link to="/initiatives" className="mt-8 inline-flex items-center gap-2 border-b border-paper/40 pb-1 text-sm hover:border-paper">
-              Read the initiatives →
+              {t("initiatives.read")}
             </Link>
           </div>
           <div className="relative">
             <img src={tree} alt="Plant a tree on your birthday" width={1200} height={900} loading="lazy" className="w-full grayscale-[.2]" />
             <div className="absolute bottom-4 left-4 bg-navy/90 px-4 py-3 border border-border">
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">Movement</div>
-              <div className="mt-1 font-serif text-lg text-paper">Plant a tree on your birthday</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">{t("initiatives.movement")}</div>
+              <div className="mt-1 font-serif text-lg text-paper">{t("initiatives.plantTree")}</div>
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* CONTACT + MAP + FORM */}
-      <section className="border-t border-border bg-midnight">
+      < section className="border-t border-border bg-midnight" >
         <div className="mx-auto max-w-7xl px-6 py-20">
 
           {/* Section header */}
           <div className="mb-12">
-            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">Get in Touch</p>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">Visit, write, or call.</h2>
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">{t("contact.tag")}</p>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">{t("contact.title")}</h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
-              UHO Law Club, near Bundelkhand University, Jhansi. In-person and online consultations available — clients welcome from anywhere in the world.
+              {t("contact.desc")}
             </p>
           </div>
 
@@ -410,14 +666,14 @@ function Index() {
             {/* Map */}
             <div className="md:col-span-7 overflow-hidden">
               <div className="border-b border-border bg-navy px-5 py-2.5 flex items-center justify-between">
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold">Find Us · Jhansi, UP</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold">{t("contact.findUs")}</span>
                 <a
                   href="https://www.google.com/maps/search/Bundelkhand+University,+Jhansi"
                   target="_blank"
                   rel="noreferrer"
                   className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper/50 hover:text-gold"
                 >
-                  Open in Maps →
+                  {t("contact.openMaps")}
                 </a>
               </div>
               <iframe
@@ -436,7 +692,7 @@ function Index() {
             <div className="bg-navy p-8 md:col-span-5 flex flex-col justify-between">
               <div className="space-y-6">
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Address</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.address")}</div>
                   <div className="mt-2 font-serif text-lg text-paper leading-snug">
                     UHO Law Club · <br />
                     Near Bundelkhand University, Jhansi<br />
@@ -444,25 +700,25 @@ function Index() {
                   </div>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Hours</div>
-                  <div className="mt-2 font-serif text-lg text-paper">Mon – Sat · 10:00 – 16:00</div>
-                  <div className="mt-1 text-xs text-muted-foreground">Bail matters 15:00 – 16:00</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.hours")}</div>
+                  <div className="mt-2 font-serif text-lg text-paper">{t("contact.hoursValue")}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">{t("contact.bail")}</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Direct line</div>
-                  <a href="tel:+919305770340" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 9532660984</a>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.directLine")}</div>
+                  <a href="tel:+919532660984" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 9532660984</a>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Email</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.emailLabel")}</div>
                   <a href="mailto:advocateavinashpathak@gmail.com" className="mt-2 block text-sm text-paper/80 hover:text-gold break-all">advocateavinashpathak@gmail.com</a>
                 </div>
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link to="/appointment" className="inline-flex items-center gap-2 bg-paper px-5 py-2.5 text-sm text-navy hover:bg-gold">
-                  Book consultation →
+                  {t("contact.bookConsultation")}
                 </Link>
                 <Link to="/contact" className="inline-flex items-center gap-2 border border-paper/30 px-5 py-2.5 text-sm text-paper hover:bg-paper/5">
-                  Full contact page
+                  {t("contact.fullContactPage")}
                 </Link>
               </div>
             </div>
@@ -471,7 +727,7 @@ function Index() {
           {/* Contact form */}
           <ContactForm />
         </div>
-      </section>
+      </section >
     </>
   );
 }

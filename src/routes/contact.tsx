@@ -5,10 +5,15 @@ import payAsset from "../assets/uho-payment-card.jpeg.asset.json";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — UHO Law Club, Jhansi" },
-      { name: "description", content: "Reach the chambers of Advocate Avinash Pathak in Jhansi. Office hours, direct line, email and social channels." },
-      { property: "og:title", content: "Contact — UHO Law Club" },
-      { property: "og:description", content: "Visit the chambers in Jhansi, or write in." },
+      { title: "Contact Chambers in Jhansi | UHO Law Club – Adv. Avinash Pathak" },
+      { name: "description", content: "Contact UHO Law Club (uholawclub) in Jhansi, Uttar Pradesh. Near Bundelkhand University. Phone: +91 9532660984, Email: advocateavinashpathak@gmail.com." },
+      { property: "og:title", content: "Contact Chambers in Jhansi | UHO Law Club – Adv. Avinash Pathak" },
+      { property: "og:description", content: "Visit UHO Law Club chambers in Jhansi, Uttar Pradesh or write in to consult Adv. Avinash Pathak." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://uholawclub.com/contact" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://uholawclub.com/contact" },
     ],
   }),
   component: Contact,
