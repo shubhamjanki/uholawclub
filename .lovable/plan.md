@@ -60,7 +60,7 @@ Each route ships its own `head()` with unique title/description/og text.
 - Below tiers: booking form (name, email, phone, matter type, preferred date, message) → posts to a simple TanStack server function that emails the office (stub for now; wire real email when Cloud is enabled later).
 
 ### /contact
-- Office block: UHO Law Club, near Bundelkhand University, Jhansi. Hours 10 AM – 4 PM (Mon–Fri, Bail 3–4). Email, WhatsApp `9305770340`, Twitter/X `@theUHOHouse`, Instagram `@theuhohouse`, blog. Simple contact form + static map illustration.
+- Office block: UHO Law Club, near Bundelkhand University, Jhansi. Hours 10 AM – 4 PM (Mon–Fri, Bail 3–4). Email, WhatsApp `9305770340`, Website `https://www.uholawclub.in`, X/Twitter `@UHOlawclub`, Instagram `@uholawclub`, LinkedIn `UHO Law Club`, blog. Simple contact form + static map illustration.
 
 ## Technical notes
 

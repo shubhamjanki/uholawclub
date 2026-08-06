@@ -85,7 +85,11 @@ function Appointment() {
             <div className="mt-10 space-y-4 text-sm">
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Direct line</div>
-                <a href="tel:+919305770340" className="mt-1 block font-serif text-lg text-paper hover:text-gold">+91 9532660984</a>
+                <a href="tel:+919532660984" className="mt-1 block font-serif text-lg text-paper hover:text-gold">+91 95326 60984</a>
+              </div>
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Jhansi Branch</div>
+                <a href="tel:+919305770340" className="mt-1 block font-serif text-lg text-paper hover:text-gold">+91 93057 70340</a>
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Email</div>
@@ -197,18 +201,22 @@ function Appointment() {
               Follow updates, public writing, and UHO announcements through the channels below.
             </p>
           </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            <a href="https://twitter.com/theUHOHouse" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <a href="https://www.uholawclub.in" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
+              <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Website</div>
+              <div className="mt-2">uholawclub.in</div>
+            </a>
+            <a href="https://www.twitter.com/UHOlawclub" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
               <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">X / Twitter</div>
-              <div className="mt-2">@theUHOHouse</div>
+              <div className="mt-2">@UHOlawclub</div>
             </a>
-            <a href="https://instagram.com/theuhohouse" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
+            <a href="https://www.instagram.com/uholawclub" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
               <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Instagram</div>
-              <div className="mt-2">@theuhohouse</div>
+              <div className="mt-2">@uholawclub</div>
             </a>
-            <a href="https://wa.me/919532660984" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
-              <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">WhatsApp</div>
-              <div className="mt-2">Book instantly</div>
+            <a href="https://www.linkedin.com/company/UHOLawclub" target="_blank" rel="noreferrer" className="rounded border border-border bg-midnight/70 p-4 text-sm text-paper transition-colors hover:border-gold hover:text-gold">
+              <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">LinkedIn</div>
+              <div className="mt-2">UHO Law Club</div>
             </a>
           </div>
         </div>

@@ -79,7 +79,11 @@ function Contact() {
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Direct line</div>
-                <a href="tel:+919305770340" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 9532660984</a>
+                <a href="tel:+919532660984" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 95326 60984</a>
+              </div>
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Jhansi Branch</div>
+                <a href="tel:+919305770340" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 93057 70340</a>
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Email</div>
@@ -88,9 +92,10 @@ function Contact() {
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">On the record</div>
                 <div className="mt-2 flex flex-wrap gap-4 text-sm">
-                  <a href="https://twitter.com/theUHOHouse" target="_blank" rel="noreferrer" className="text-paper hover:text-gold">X · @theUHOHouse</a>
-                  <a href="https://instagram.com/theuhohouse" target="_blank" rel="noreferrer" className="text-paper hover:text-gold">Instagram · @theuhohouse</a>
-                  <a href="https://advocateavinashpathak.blogspot.com" target="_blank" rel="noreferrer" className="text-paper hover:text-gold">Blog</a>
+                  <a href="https://www.uholawclub.in" target="_blank" rel="noreferrer" className="text-paper hover:text-gold">Website</a>
+                  <a href="https://www.twitter.com/UHOlawclub" target="_blank" rel="noreferrer" className="text-paper hover:text-gold">X · @UHOlawclub</a>
+                  <a href="https://www.instagram.com/uholawclub" target="_blank" rel="noreferrer" className="text-paper hover:text-gold">Instagram · @uholawclub</a>
+                  <a href="https://www.linkedin.com/company/UHOLawclub" target="_blank" rel="noreferrer" className="text-paper hover:text-gold">LinkedIn</a>
                 </div>
               </div>
             </div>

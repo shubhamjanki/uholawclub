@@ -23,22 +23,28 @@ export const Route = createFileRoute("/about")({
 
 const SOCIALS = [
   {
+    name: "Website",
+    handle: "www.uholawclub.in",
+    url: "https://www.uholawclub.in",
+    desc: "Visit the official website for the law firm, legal services, and office information."
+  },
+  {
     name: "Twitter",
-    handle: "@theUHOHouse",
-    url: "https://twitter.com/theUHOHouse",
+    handle: "@UHOlawclub",
+    url: "https://www.twitter.com/UHOlawclub",
     desc: "Daily commentary on law, constitutional rights, and public notices from the chambers."
   },
   {
     name: "Instagram",
-    handle: "@theuhohouse",
-    url: "https://instagram.com/theuhohouse",
+    handle: "@uholawclub",
+    url: "https://www.instagram.com/uholawclub",
     desc: "Behind the scenes in chambers, civic action events, and photos from tree plantation drives."
   },
   {
-    name: "WhatsApp",
-    handle: "+91 9532660984",
-    url: "https://wa.me/919532660984",
-    desc: "Direct line to book legal consultations and reach the office in Jhansi."
+    name: "LinkedIn",
+    handle: "UHO Law Club",
+    url: "https://www.linkedin.com/company/UHOLawclub",
+    desc: "Professional updates, company profile, and legal practice announcements."
   },
 ];
 
@@ -85,29 +91,39 @@ function SocialIcon({ name }: { name: string }) {
   if (name === "Twitter") {
     return (
       <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
       </svg>
     );
   }
   if (name === "Instagram") {
     return (
       <svg className="h-5 w-5 fill-none stroke-current" strokeWidth="2" viewBox="0 0 24 24">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
       </svg>
     );
   }
-  if (name === "WhatsApp") {
+  if (name === "Website") {
+    return (
+      <svg className="h-5 w-5 fill-none stroke-current" strokeWidth="2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M2 12h20" />
+        <path d="M12 2a15 15 0 0 1 0 20" />
+        <path d="M12 2a15 15 0 0 0 0 20" />
+      </svg>
+    );
+  }
+  if (name === "LinkedIn") {
     return (
       <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
-        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+        <path d="M6.94 8.5A1.56 1.56 0 1 0 6.94 5.38a1.56 1.56 0 0 0 0 3.12zM5.5 9.75h2.88V18H5.5zM10.45 9.75h2.76v1.12h.04c.38-.72 1.31-1.48 2.7-1.48 2.88 0 3.41 1.89 3.41 4.35V18h-2.88v-7.57c0-1.8-.03-4.12-2.5-4.12-2.51 0-2.89 1.96-2.89 3.98V18H10.45z" />
       </svg>
     );
   }
   return (
     <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
-      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
     </svg>
   );
 }
@@ -181,9 +197,14 @@ function About() {
             </p>
           </FadeIn>
 
-          <div className="mt-12 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+          {/* Flex row for all socials */}
+          <div className="mt-12 flex gap-px bg-border overflow-x-auto pb-4 scroll-smooth scrollbar-none">
             {SOCIALS.map((s, i) => (
-              <FadeIn key={s.name} delay={i * 80} className="group bg-paper transition-colors hover:bg-navy/[0.03]">
+              <FadeIn
+                key={s.name}
+                delay={i * 80}
+                className="group bg-paper transition-colors hover:bg-navy/[0.03] min-w-[280px] max-w-[320px] flex-shrink-0 snap-start"
+              >
                 <a
                   href={s.url}
                   target="_blank"
@@ -206,6 +227,8 @@ function About() {
           </div>
         </div>
       </section>
+
+
 
 
       {/* UHO HISTORY */}
