@@ -187,7 +187,7 @@ function About() {
       </section>
 
       {/* SOCIAL MEDIA */}
-      <section className="paper-section border-y border-border">
+<section className="paper-section border-y border-border">
         <div className="mx-auto max-w-7xl px-6 py-24">
           <FadeIn>
             <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-steel">Connect</p>

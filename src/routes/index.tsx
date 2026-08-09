@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import tree from "../assets/tree.jpg";
 import advocateImg2 from "../assets/WhatsApp Image 2026-07-29 at 19.28.22.jpeg";
 import { useLanguage } from "../lib/LanguageContext";
-
+import mapImage from '../assets/map.jpeg';
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -371,10 +371,10 @@ function Index() {
                   {t("booking.sidebar.email")}
                 </div>
                 <a
-                  href="mailto:advocateavinashpathak@gmail.com"
+                  href="mailto:uholawclub@gmail.com"
                   className="mt-1 block text-paper/85 hover:text-gold break-words"
                 >
-                  advocateavinashpathak@gmail.com
+                  uholawclub@gmail.com
                 </a>
               </div>
 
@@ -392,32 +392,26 @@ function Index() {
                 </a>
               </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-4 pt-4 border-t border-border">
+              {/* <div className="mt-6 grid grid-cols-2 gap-4 pt-4 border-t border-border">
                 <Stat n="8+" label={t("stat.yrs")} />
                 <Stat n="19+" label={t("stat.books")} />
                 <Stat n="46" label={t("stat.districts")} />
                 <Stat n="2020" label={t("stat.founded")} />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </section>
 
 
-      {/* Credentials strip */}
+     {/* Credentials strip */}
       < div className="border-y border-border" >
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-10 gap-y-3 px-6 py-5 font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-          <span>{t("cred.supreme")}</span>
+          <span>UHO Law Club Asia </span>
           <span className="text-steel">·</span>
-          <span>{t("cred.highCourt")}</span>
+          <span>UHO Law Club Europe </span>
           <span className="text-steel">·</span>
-          <span>{t("cred.district")}</span>
-          <span className="text-steel">·</span>
-          <span>{t("cred.barCouncil")}</span>
-          <span className="text-steel">·</span>
-          <span>{t("cred.uhoClub")}</span>
-          <span className="text-steel">·</span>
-          <span className="text-gold">{t("cred.online")}</span>
+          <span>UHO law club Africa</span>
         </div>
       </div >
 
@@ -676,25 +670,9 @@ function Index() {
             <div className="md:col-span-7 overflow-hidden">
               <div className="border-b border-border bg-navy px-5 py-2.5 flex items-center justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold">{t("contact.findUs")}</span>
-                <a
-                  href="https://www.google.com/maps/search/Bundelkhand+University,+Jhansi"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper/50 hover:text-gold"
-                >
-                  {t("contact.openMaps")}
-                </a>
+              
               </div>
-              <iframe
-                title="UHO Law Club — near Bundelkhand University, Jhansi"
-                src="https://maps.google.com/maps?q=Bundelkhand+University+Jhansi+Uttar+Pradesh+India&z=15&output=embed"
-                width="100%"
-                height="340"
-                className="block w-full border-0"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
+               <img src={mapImage} alt="UHO Law Club Location" />
             </div>
 
             {/* Contact details */}
@@ -719,7 +697,7 @@ function Index() {
                 </div>
                 <div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.emailLabel")}</div>
-                  <a href="mailto:advocateavinashpathak@gmail.com" className="mt-2 block text-sm text-paper/80 hover:text-gold break-all">advocateavinashpathak@gmail.com</a>
+                  <a href="mailto:uholawclub@gmail.com" className="mt-2 block text-sm text-paper/80 hover:text-gold break-all">uholawclub@gmail.com</a>
                 </div>
               </div>
               <div className="mt-8 flex flex-wrap gap-3">

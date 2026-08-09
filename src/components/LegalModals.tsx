@@ -61,7 +61,7 @@ export function LegalModals({ activeModal, onClose }: LegalModalsProps) {
               <h4 className="font-serif text-base text-gold pt-2">4. Contact Information</h4>
               <p>
                 For questions regarding data privacy, reach out to our chambers at{" "}
-                <a href="mailto:advocateavinashpathak@gmail.com" className="text-gold underline">
+                <a href="mailto:uholawclub@gmail.com" className="text-gold underline">
                 uholawclub@gmail.com
                 </a>
                 .

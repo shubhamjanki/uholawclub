@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import payAsset from "../assets/uho-payment-card.jpeg.asset.json";
-
+import mapImage from '../assets/map.jpeg'
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact Chambers in Jhansi | UHO Law Club – Adv. Avinash Pathak" },
-      { name: "description", content: "Contact UHO Law Club (uholawclub) in Jhansi, Uttar Pradesh. Near Bundelkhand University. Phone: +91 9532660984, Email: advocateavinashpathak@gmail.com." },
+      { name: "description", content: "Contact UHO Law Club (uholawclub) in Jhansi, Uttar Pradesh. Near Bundelkhand University. Phone: +91 9532660984, Email: uholawclub@gmail.com." },
       { property: "og:title", content: "Contact Chambers in Jhansi | UHO Law Club – Adv. Avinash Pathak" },
       { property: "og:description", content: "Visit UHO Law Club chambers in Jhansi, Uttar Pradesh or write in to consult Adv. Avinash Pathak." },
       { property: "og:type", content: "website" },
@@ -37,26 +37,9 @@ function Contact() {
       <section className="mx-auto max-w-7xl px-6 pb-10">
         <div className="overflow-hidden border border-border">
           <div className="border-b border-border bg-midnight px-6 py-3 flex items-center justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Find Us · Jhansi, Uttar Pradesh</span>
-            <a
-              href="https://www.google.com/maps/search/Bundelkhand+University,+Jhansi,+Uttar+Pradesh"
-              target="_blank"
-              rel="noreferrer"
-              className="font-mono text-[10px] uppercase tracking-[0.22em] text-paper/50 hover:text-gold"
-            >
-              Open in Google Maps →
-            </a>
-          </div>
-          <iframe
-            title="UHO Law Club location — near Bundelkhand University, Jhansi"
-            src="https://maps.google.com/maps?q=Bundelkhand+University+Jhansi+Uttar+Pradesh+India&z=15&output=embed"
-            width="100%"
-            height="380"
-            className="block w-full border-0"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
+            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Find Us </span>
+           </div>
+          <img src={mapImage} alt="UHO Law Club Location" />
         </div>
       </section>
 
@@ -66,7 +49,7 @@ function Contact() {
             <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Office</div>
             <div className="mt-4 font-serif text-2xl text-paper leading-tight">
               UHO Law Club<br />
-               · Jhansi
+          
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
               Near Bundelkhand University, close to Sanjeevani ICU and Maa Kamakhya Seva, Jhansi, Uttar Pradesh.
@@ -87,7 +70,7 @@ function Contact() {
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Email</div>
-                <a href="mailto:advocateavinashpathak@gmail.com" className="mt-2 block text-paper hover:text-gold break-words">advocateavinashpathak@gmail.com</a>
+                <a href="mailto:uholawclub@gmail.com" className="mt-2 block text-paper hover:text-gold break-words">uholawclub@gmail.com</a>
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">On the record</div>

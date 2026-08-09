@@ -29,7 +29,7 @@ const en: TranslationDict = {
   "nav.appointment": "Appointment",
   "nav.contact": "Contact",
   "header.title": "UHO Law Club",
-  "header.subtitle": "UNITED HUMAN ORGANIZATION • EST. 2020",
+  "header.subtitle": "All Service law firm Global"  ,
   "header.location": "JHANSI, INDIA — GLOBAL PRACTICE",
 
   // ── Booking form (index hero) ──
@@ -539,7 +539,7 @@ export function LanguageSwitcher() {
     <div className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1.5 border border-navy/40 bg-navy/10 px-2.5 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-navy transition-all hover:bg-navy hover:text-[#d4af37]"
+        className="inline-flex items-center gap-1.5 border border-navy/40 bg-navy/10 px-1.5 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-navy transition-all hover:bg-navy hover:text-[#d4af37]"
         aria-label={t("langSwitch.label")}
       >
         <span className="text-base leading-none">{current.flag}</span>

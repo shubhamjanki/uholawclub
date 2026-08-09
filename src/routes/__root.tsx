@@ -99,7 +99,7 @@ const legalServiceSchema = {
   "alternateName": ["uholawclub", "uholawclub.com", "UHO Law Club Asia", "Chambers of Advocate Avinash Pathak"],
   "url": "https://uholawclub.com",
   "telephone": "+919532660984",
-  "email": "advocateavinashpathak@gmail.com",
+  "email": "uholawclub@gmail.com",
   "priceRange": "₹844 - ₹11,000",
   "address": {
     "@type": "PostalAddress",
@@ -244,12 +244,12 @@ function Header() {
             {/* Language Switcher */}
             <LanguageSwitcher />
 
-            <Link
+            {/* <Link
               to="/appointment"
               className="inline-flex items-center gap-1.5 border-2 border-navy bg-transparent px-3.5 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-navy shadow-sm transition-all duration-200 hover:bg-navy hover:text-[#d4af37] active:scale-95"
             >
               <span>{t("nav.bookNow")}</span>
-            </Link>
+            </Link> */}
 
             {/* Mobile Toggle Button */}
             <button
@@ -394,7 +394,7 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
                 </a>
               </li>
               <li>
-                <a href="mailto:advocateavinashpathak@gmail.com" className="transition-colors hover:text-gold break-words">
+                <a href="mailto:uholawclub@gmail.com" className="transition-colors hover:text-gold break-words">
                   uholawclub@gmail.com
                 </a>
               </li>

@@ -93,7 +93,7 @@ function Appointment() {
               </div>
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Email</div>
-                <a href="mailto:advocateavinashpathak@gmail.com" className="mt-1 block text-paper/85 hover:text-gold break-words">advocateavinashpathak@gmail.com</a>
+                <a href="mailto:uholawclub@gmail.com" className="mt-1 block text-paper/85 hover:text-gold break-words">uholawclub@gmail.com</a>
               </div>
             </div>
           </div>
