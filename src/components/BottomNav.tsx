@@ -45,21 +45,42 @@ export function BottomNav({ onOpenLegalModal }: BottomNavProps) {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden w-full bg-[#070e20]/95 backdrop-blur-xl text-paper border-t border-gold/30 shadow-[0_-10px_35px_rgba(0,0,0,0.75)]" style={{paddingBottom: 'env(safe-area-inset-bottom)'}}>
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 md:hidden w-full bg-black/95 backdrop-blur-xl text-white border-t border-white/20 shadow-[0_-10px_35px_rgba(0,0,0,0.75)]"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
       {/* Legal Links Row */}
       <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-3 pt-2 pb-1 border-b border-paper/10 text-[10px] font-medium">
-          <button onClick={() => onOpenLegalModal("privacy")} className="text-paper/70 hover:text-gold transition-colors">Privacy</button>
-          <span className="text-paper/30">•</span>
-          <button onClick={() => onOpenLegalModal("terms")} className="text-paper/70 hover:text-gold transition-colors">Terms</button>
-          <span className="text-paper/30">•</span>
-          <button onClick={() => onOpenLegalModal("disclaimer")} className="text-paper/70 hover:text-gold transition-colors">Disclaimer</button>
-          <span className="text-paper/30">•</span>
-          <span className="text-paper/50 italic font-serif text-[9px]">Counsel with conviction.</span>
+        <button
+          onClick={() => onOpenLegalModal("privacy")}
+          className="text-white/70 hover:text-white transition-colors"
+        >
+          Privacy
+        </button>
+        <span className="text-white/30">•</span>
+        <button
+          onClick={() => onOpenLegalModal("terms")}
+          className="text-white/70 hover:text-white transition-colors"
+        >
+          Terms
+        </button>
+        <span className="text-white/30">•</span>
+        <button
+          onClick={() => onOpenLegalModal("disclaimer")}
+          className="text-white/70 hover:text-white transition-colors"
+        >
+          Disclaimer
+        </button>
+        <span className="text-white/30">•</span>
+        <span className="text-white/50 italic font-serif text-[9px]">Counsel with conviction.</span>
       </div>
 
       {/* 5 Fixed Bottom Nav Tabs */}
       <div className="mx-auto max-w-md px-2 py-1.5">
-        <nav aria-label="Bottom Navigation" className="grid grid-cols-5 items-center justify-items-center">
+        <nav
+          aria-label="Bottom Navigation"
+          className="grid grid-cols-5 items-center justify-items-center"
+        >
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -67,19 +88,19 @@ export function BottomNav({ onOpenLegalModal }: BottomNavProps) {
                 key={item.to}
                 to={item.to}
                 className={`group flex flex-col items-center justify-center w-full py-1 px-1 rounded-xl transition-all duration-200 ${
-                  item.isActive
-                    ? "text-gold"
-                    : "text-paper/60 hover:text-paper"
+                  item.isActive ? "text-white" : "text-white/60 hover:text-white"
                 }`}
               >
                 <div
                   className={`relative p-1.5 rounded-xl transition-all duration-200 group-active:scale-95 ${
                     item.isActive
-                      ? "bg-gold/20 text-gold ring-1 ring-gold/60 shadow-[0_0_12px_rgba(201,168,76,0.35)]"
-                      : "group-hover:bg-paper/5"
+                      ? "bg-white/20 text-white ring-1 ring-white/60 shadow-[0_0_12px_rgba(255,255,255,0.35)]"
+                      : "group-hover:bg-white/10"
                   }`}
                 >
-                  <Icon className={`w-5 h-5 transition-colors ${item.isActive ? "text-gold stroke-[2.25]" : "stroke-[1.75]"}`} />
+                  <Icon
+                    className={`w-5 h-5 transition-colors ${item.isActive ? "text-gold stroke-[2.25]" : "stroke-[1.75]"}`}
+                  />
                 </div>
                 <span
                   className={`mt-0.5 text-[10px] tracking-tight transition-colors ${

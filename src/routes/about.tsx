@@ -2,21 +2,26 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import portraitAsset from "../assets/portrait-buttoning.jpeg.asset.json";
 import library from "../assets/library.jpg";
-import advocateImg3 from "../assets/WhatsApp Image 2026-07-29 at 19.28.20 (3).jpeg"
+import advocateImg3 from "../assets/WhatsApp Image 2026-07-29 at 19.28.20 (3).jpeg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About Adv. Avinash Pathak | UHO Law Club" },
-      { name: "description", content: "Learn about Advocate Avinash Pathak — legal background, bar practice before High Courts & Supreme Court, books published, and founding of United Human Organization." },
+      {
+        name: "description",
+        content:
+          "Learn about Advocate Avinash Pathak — legal background, bar practice before High Courts & Supreme Court, books published, and founding of United Human Organization.",
+      },
       { property: "og:title", content: "About Adv. Avinash Pathak | UHO Law Club" },
-      { property: "og:description", content: "Advocate, writer, and founder of the UHO Law Club in Jhansi." },
+      {
+        property: "og:description",
+        content: "Advocate, writer, and founder of the UHO Law Club in Jhansi.",
+      },
       { property: "og:type", content: "profile" },
       { property: "og:url", content: "https://uholawclub.com/about" },
     ],
-    links: [
-      { rel: "canonical", href: "https://uholawclub.com/about" },
-    ],
+    links: [{ rel: "canonical", href: "https://uholawclub.com/about" }],
   }),
   component: About,
 });
@@ -26,33 +31,49 @@ const SOCIALS = [
     name: "Website",
     handle: "www.uholawclub.in",
     url: "https://www.uholawclub.in",
-    desc: "Visit the official website for the law firm, legal services, and office information."
+    desc: "Visit the official website for the law firm, legal services, and office information.",
   },
   {
     name: "Twitter",
     handle: "@UHOlawclub",
     url: "https://www.twitter.com/UHOlawclub",
-    desc: "Daily commentary on law, constitutional rights, and public notices from the chambers."
+    desc: "Daily commentary on law, constitutional rights, and public notices from the chambers.",
   },
   {
     name: "Instagram",
     handle: "@uholawclub",
     url: "https://www.instagram.com/uholawclub",
-    desc: "Behind the scenes in chambers, civic action events, and photos from tree plantation drives."
+    desc: "Behind the scenes in chambers, civic action events, and photos from tree plantation drives.",
   },
   {
     name: "LinkedIn",
     handle: "UHO Law Club",
     url: "https://www.linkedin.com/company/UHOLawclub",
-    desc: "Professional updates, company profile, and legal practice announcements."
+    desc: "Professional updates, company profile, and legal practice announcements.",
   },
 ];
 
 const TIMELINE = [
-  { year: "1997", title: "Born in Bundelkhand", body: "Roots in Lalitpur, Uttar Pradesh — a childhood shaped by the region's history and its unresolved questions." },
-  { year: "2017 – 2020", title: "Corporate Law at ALS", body: "Formal legal training. Concurrent work with 119+ brands during college — a foundation in commercial practice." },
-  { year: "2020 – 2023", title: "Founded UHO Law Club", body: "Established chambers in Jhansi. First matters before the District Court and Allahabad High Court." },
-  { year: "2023 – Now", title: "Supreme Court practice", body: "Regular appearances before the Supreme Court of India. Standing counsel for United Human Organization." },
+  {
+    year: "1997",
+    title: "Born in Bundelkhand",
+    body: "Roots in Lalitpur, Uttar Pradesh — a childhood shaped by the region's history and its unresolved questions.",
+  },
+  {
+    year: "2017 – 2020",
+    title: "Corporate Law at ALS",
+    body: "Formal legal training. Concurrent work with 119+ brands during college — a foundation in commercial practice.",
+  },
+  {
+    year: "2020 – 2023",
+    title: "Founded UHO Law Club",
+    body: "Established chambers in Jhansi. First matters before the District Court and Allahabad High Court.",
+  },
+  {
+    year: "2023 – Now",
+    title: "Supreme Court practice",
+    body: "Regular appearances before the Supreme Court of India. Standing counsel for United Human Organization.",
+  },
 ];
 
 function useInView() {
@@ -61,16 +82,30 @@ function useInView() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setInView(true); obs.disconnect(); }
-    }, { threshold: 0.1 });
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.1 },
+    );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
   return { ref, inView };
 }
 
-function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function FadeIn({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const { ref, inView } = useInView();
   return (
     <div
@@ -137,13 +172,21 @@ function About() {
           A lawyer who writes. A writer who litigates.
         </h1>
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-paper/75">
-          Avinash Pathak's practice sits at an uncommon intersection — the disciplined patience of writing books, and the immediate consequence of standing before a judge.
+          Avinash Pathak's practice sits at an uncommon intersection — the disciplined patience of
+          writing books, and the immediate consequence of standing before a judge.
         </p>
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-12 px-6 pb-24 md:grid-cols-12">
         <div className="md:col-span-5">
-          <img src={advocateImg3} alt="Avinash Pathak" width={686} height={1024} loading="lazy" className="w-full" />
+          <img
+            src={advocateImg3}
+            alt="Avinash Pathak"
+            width={686}
+            height={1024}
+            loading="lazy"
+            className="w-full"
+          />
           <div className="mt-6 border-l border-gold pl-4">
             <p className="font-devanagari text-2xl leading-tight text-paper">
               कार्यालय अविनाश पाठक — लेखक व अधिवक्ता
@@ -155,16 +198,26 @@ function About() {
         </div>
         <div className="md:col-span-7 space-y-8 text-base leading-[1.8] text-paper/85">
           <p>
-            The chambers were formally established in 2020, but the work began much earlier. Through law school at ALS, Avinash was already consulting for over a hundred brands — an unusual apprenticeship that grounded him in the practical business of commercial law before he had a bar card.
+            The chambers were formally established in 2020, but the work began much earlier. Through
+            law school at ALS, Avinash was already consulting for over a hundred brands — an unusual
+            apprenticeship that grounded him in the practical business of commercial law before he
+            had a bar card.
           </p>
           <p>
-            In parallel, another discipline: writing. Thirteen years of it. Nineteen published books on ecology, jurisprudence, history and civic thought. The tagline he keeps on his desk — <em>Writer to live for Earth</em> — is not a slogan; it is a working thesis.
+            In parallel, another discipline: writing. Thirteen years of it. Nineteen published books
+            on ecology, jurisprudence, history and civic thought. The tagline he keeps on his desk —{" "}
+            <em>Writer to live for Earth</em> — is not a slogan; it is a working thesis.
           </p>
           <p>
-            Today the practice covers criminal defence, corporate advisory, constitutional matters and human-rights litigation. He appears regularly before the Allahabad High Court and the Supreme Court of India, while continuing to run the office in Jhansi personally — no gatekeepers, no long chains between counsel and client.
+            Today the practice covers criminal defence, corporate advisory, constitutional matters
+            and human-rights litigation. He appears regularly before the Allahabad High Court and
+            the Supreme Court of India, while continuing to run the office in Jhansi personally — no
+            gatekeepers, no long chains between counsel and client.
           </p>
           <p>
-            The founding conviction has not changed: <span className="text-paper">a lawyer's first client is the constitution</span>. Everything downstream — commercial retainers, criminal defence, PILs — flows from that.
+            The founding conviction has not changed:{" "}
+            <span className="text-paper">a lawyer's first client is the constitution</span>.
+            Everything downstream — commercial retainers, criminal defence, PILs — flows from that.
           </p>
         </div>
       </section>
@@ -175,9 +228,11 @@ function About() {
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">Milestones</p>
           <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">The record so far.</h2>
           <div className="mt-14 grid gap-px bg-border md:grid-cols-4">
-            {TIMELINE.map(t => (
+            {TIMELINE.map((t) => (
               <div key={t.year} className="bg-midnight p-8">
-                <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-gold">{t.year}</div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-gold">
+                  {t.year}
+                </div>
                 <div className="mt-4 font-serif text-xl text-paper">{t.title}</div>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t.body}</p>
               </div>
@@ -187,13 +242,14 @@ function About() {
       </section>
 
       {/* SOCIAL MEDIA */}
-<section className="paper-section border-y border-border">
+      <section className="paper-section border-y border-border">
         <div className="mx-auto max-w-7xl px-6 py-24">
           <FadeIn>
             <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-steel">Connect</p>
             <h2 className="mt-3 font-serif text-4xl md:text-5xl text-navy">Follow the work.</h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-midnight/80">
-              Join the conversation across platforms — daily notes from court, essays on justice, and the movements growing out of Bundelkhand.
+              Join the conversation across platforms — daily notes from court, essays on justice,
+              and the movements growing out of Bundelkhand.
             </p>
           </FadeIn>
 
@@ -216,7 +272,9 @@ function About() {
                     <SocialIcon name={s.name} />
                   </div>
                   <h3 className="mt-6 font-serif text-2xl text-navy">{s.name}</h3>
-                  <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-steel">{s.handle}</p>
+                  <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-steel">
+                    {s.handle}
+                  </p>
                   <p className="mt-4 text-sm leading-relaxed text-midnight/80">{s.desc}</p>
                   <span className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-navy/60 transition-colors group-hover:text-gold">
                     Visit profile →
@@ -228,17 +286,17 @@ function About() {
         </div>
       </section>
 
-
-
-
       {/* UHO HISTORY */}
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="border-b border-border pb-8 mb-14">
           <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">History</p>
-          <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">The United Human Organization.</h2>
+          <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">
+            The United Human Organization.
+          </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-paper/70">
-            From a single legal practice in Jhansi to a global network of advocacy, law and environmental action —
-            the story of UHO is the story of one conviction held long enough to become a movement.
+            From a single legal practice in Jhansi to a global network of advocacy, law and
+            environmental action — the story of UHO is the story of one conviction held long enough
+            to become a movement.
           </p>
         </div>
 
@@ -246,22 +304,28 @@ function About() {
         <div className="grid gap-px bg-border md:grid-cols-12 mb-px">
           <div className="bg-navy p-8 md:p-10 md:col-span-3 flex flex-col justify-between">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Chapter 01</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">
+                Chapter 01
+              </div>
               <div className="mt-4 font-serif text-2xl text-paper leading-snug">Foundation</div>
-              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">2020</div>
+              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                2020
+              </div>
             </div>
             <div className="mt-10 h-px bg-border" />
           </div>
           <div className="bg-midnight p-8 md:p-10 md:col-span-9 space-y-4 text-base leading-[1.85] text-paper/80">
             <p>
-              The United Human Organization was founded in <span className="text-paper font-medium">2020</span> by
-              Advocate Avinash Pathak with a single, uncompromising vision: to unite humanity through
-              the instruments of <span className="text-paper">law, peace, and sustainability</span>.
+              The United Human Organization was founded in{" "}
+              <span className="text-paper font-medium">2020</span> by Advocate Avinash Pathak with a
+              single, uncompromising vision: to unite humanity through the instruments of{" "}
+              <span className="text-paper">law, peace, and sustainability</span>.
             </p>
             <p>
-              Where most legal organizations are defined by their practice areas, UHO was conceived as
-              something broader — a platform where jurisprudence meets civic responsibility, and where
-              every legal act carries a social consequence. The founding tagline captures it simply:
+              Where most legal organizations are defined by their practice areas, UHO was conceived
+              as something broader — a platform where jurisprudence meets civic responsibility, and
+              where every legal act carries a social consequence. The founding tagline captures it
+              simply:
             </p>
             <blockquote className="border-l-2 border-gold pl-5 font-serif text-xl text-paper italic leading-relaxed">
               "We the Human of Earth."
@@ -277,30 +341,38 @@ function About() {
         <div className="grid gap-px bg-border md:grid-cols-12 mb-px">
           <div className="bg-navy p-8 md:p-10 md:col-span-3 flex flex-col justify-between">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Chapter 02</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">
+                Chapter 02
+              </div>
               <div className="mt-4 font-serif text-2xl text-paper leading-snug">Early Years</div>
-              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">2017 – 2020</div>
+              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                2017 – 2020
+              </div>
             </div>
             <div className="mt-10 h-px bg-border" />
           </div>
           <div className="bg-midnight p-8 md:p-10 md:col-span-9 space-y-4 text-base leading-[1.85] text-paper/80">
             <p>
-              Long before the organization took formal shape, its DNA was being written in a law school in
-              Allahabad. During his years at <span className="text-paper font-medium">ALS (2017–2020)</span>,
-              Avinash Pathak was simultaneously advising over
-              <span className="text-paper font-medium"> 119 brands</span> across sectors — an extraordinary
-              volume of commercial legal work for a student, and an education that no curriculum provides.
+              Long before the organization took formal shape, its DNA was being written in a law
+              school in Allahabad. During his years at{" "}
+              <span className="text-paper font-medium">ALS (2017–2020)</span>, Avinash Pathak was
+              simultaneously advising over
+              <span className="text-paper font-medium"> 119 brands</span> across sectors — an
+              extraordinary volume of commercial legal work for a student, and an education that no
+              curriculum provides.
             </p>
             <p>
-              That exposure — to founders, to disputes, to the gap between what the law says and what
-              clients actually need — forged a <span className="text-paper">global legal perspective</span> early.
-              He saw that law was not a national instrument but a universal one; that the same structural
-              problems around rights, contracts, and accountability appeared in every market, every culture.
+              That exposure — to founders, to disputes, to the gap between what the law says and
+              what clients actually need — forged a{" "}
+              <span className="text-paper">global legal perspective</span> early. He saw that law
+              was not a national instrument but a universal one; that the same structural problems
+              around rights, contracts, and accountability appeared in every market, every culture.
             </p>
             <p>
-              Parallel to the legal work, he was writing. Thirteen years of continuous authorship produced
-              nineteen books spanning ecology, jurisprudence, history, and civic philosophy. The writing
-              was not separate from the law — it was the long form of the same argument.
+              Parallel to the legal work, he was writing. Thirteen years of continuous authorship
+              produced nineteen books spanning ecology, jurisprudence, history, and civic
+              philosophy. The writing was not separate from the law — it was the long form of the
+              same argument.
             </p>
           </div>
         </div>
@@ -309,32 +381,39 @@ function About() {
         <div className="grid gap-px bg-border md:grid-cols-12 mb-px">
           <div className="bg-navy p-8 md:p-10 md:col-span-3 flex flex-col justify-between">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Chapter 03</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">
+                Chapter 03
+              </div>
               <div className="mt-4 font-serif text-2xl text-paper leading-snug">UHO Law Club</div>
-              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">2020 – 2023</div>
+              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                2020 – 2023
+              </div>
             </div>
             <div className="mt-10 h-px bg-border" />
           </div>
           <div className="bg-midnight p-8 md:p-10 md:col-span-9 space-y-4 text-base leading-[1.85] text-paper/80">
             <p>
-              In 2020, the <span className="text-paper font-medium">UHO Law Club</span> was formally established —
-              a legal network designed to make quality counsel accessible beyond the traditional fee structures
-              of elite practice. The founding chambers opened in Jhansi, near Bundelkhand University.
+              In 2020, the <span className="text-paper font-medium">UHO Law Club</span> was formally
+              established — a legal network designed to make quality counsel accessible beyond the
+              traditional fee structures of elite practice. The founding chambers opened in Jhansi,
+              near Bundelkhand University.
             </p>
             <p>
               Growth was deliberate and principled. By 2023, UHO Law Club had expanded to
-              <span className="text-paper font-medium"> five offices worldwide</span>, with an affiliate
-              network spanning South Asia and Southeast Asia under the banner of
+              <span className="text-paper font-medium"> five offices worldwide</span>, with an
+              affiliate network spanning South Asia and Southeast Asia under the banner of
               <span className="text-paper"> UHO Law Club Asia</span>.
             </p>
             <p>
-              A signature feature from the start was the <span className="text-paper font-medium">UHO Card</span> —
-              a membership that grants holders access to legal consultation at a community rate
-              (₹844 / US$ 10 per session). It was a structural commitment to the idea that legal advice
-              should not be a luxury. The practice appeared before the
+              A signature feature from the start was the{" "}
+              <span className="text-paper font-medium">UHO Card</span> — a membership that grants
+              holders access to legal consultation at a community rate (₹1100 / US$ 10 per session).
+              It was a structural commitment to the idea that legal advice should not be a luxury.
+              The practice appeared before the
               <span className="text-paper"> District Court Jhansi</span>,
-              <span className="text-paper"> Allahabad High Court</span>, and by 2023 had established a
-              regular presence before the <span className="text-paper">Supreme Court of India</span>.
+              <span className="text-paper"> Allahabad High Court</span>, and by 2023 had established
+              a regular presence before the{" "}
+              <span className="text-paper">Supreme Court of India</span>.
             </p>
           </div>
         </div>
@@ -343,39 +422,54 @@ function About() {
         <div className="grid gap-px bg-border md:grid-cols-12 mb-px">
           <div className="bg-navy p-8 md:p-10 md:col-span-3 flex flex-col justify-between">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Chapter 04</div>
-              <div className="mt-4 font-serif text-2xl text-paper leading-snug">Global Initiatives</div>
-              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">2020 – Present</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">
+                Chapter 04
+              </div>
+              <div className="mt-4 font-serif text-2xl text-paper leading-snug">
+                Global Initiatives
+              </div>
+              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                2020 – Present
+              </div>
             </div>
             <div className="mt-10 h-px bg-border" />
           </div>
           <div className="bg-midnight p-8 md:p-10 md:col-span-9 space-y-6 text-base leading-[1.85] text-paper/80">
             <div className="space-y-2">
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">UHO Mission 8 Billion — Plant a Tree on Your Birthday</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
+                UHO Mission 8 Billion — Plant a Tree on Your Birthday
+              </div>
               <p>
-                One tree for every human on Earth. UHO Mission 8 Billion asks every person to plant a
-                single tree on their birthday — a campaign of disarming simplicity that has mobilised
-                volunteers across India and internationally. The arithmetic is not symbolic: eight billion
-                trees planted in a generation is a measurable ecological intervention.
+                One tree for every human on Earth. UHO Mission 8 Billion asks every person to plant
+                a single tree on their birthday — a campaign of disarming simplicity that has
+                mobilised volunteers across India and internationally. The arithmetic is not
+                symbolic: eight billion trees planted in a generation is a measurable ecological
+                intervention.
               </p>
             </div>
             <div className="space-y-2">
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">The Great Aryan Dream — World Peace Treaty 2023</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
+                The Great Aryan Dream — World Peace Treaty 2023
+              </div>
               <p>
-                Perhaps UHO's most ambitious initiative, <em className="text-paper">The Great Aryan Dream</em> is
-                both a book and a framework for international civic reconciliation. The accompanying
-                <span className="text-paper"> World Peace Treaty 2023</span> proposes a model for inter-community
-                dialogue and legal recognition of shared human heritage — a document in the tradition of
-                peace charters, written for the present moment.
+                Perhaps UHO's most ambitious initiative,{" "}
+                <em className="text-paper">The Great Aryan Dream</em> is both a book and a framework
+                for international civic reconciliation. The accompanying
+                <span className="text-paper"> World Peace Treaty 2023</span> proposes a model for
+                inter-community dialogue and legal recognition of shared human heritage — a document
+                in the tradition of peace charters, written for the present moment.
               </p>
             </div>
             <div className="space-y-2">
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">Green Bharat Great Bharat</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
+                Green Bharat Great Bharat
+              </div>
               <p>
-                A domestic environmental movement founded on the principle that ecological restoration and
-                national greatness are the same project. <em className="text-paper">Green Bharat Great Bharat</em>
-                combines tree planting, river clean-up advocacy, and civic education — rooted in Bundelkhand
-                but reaching across India's districts.
+                A domestic environmental movement founded on the principle that ecological
+                restoration and national greatness are the same project.{" "}
+                <em className="text-paper">Green Bharat Great Bharat</em>
+                combines tree planting, river clean-up advocacy, and civic education — rooted in
+                Bundelkhand but reaching across India's districts.
               </p>
             </div>
           </div>
@@ -385,32 +479,38 @@ function About() {
         <div className="grid gap-px bg-border md:grid-cols-12">
           <div className="bg-navy p-8 md:p-10 md:col-span-3 flex flex-col justify-between">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Chapter 05</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">
+                Chapter 05
+              </div>
               <div className="mt-4 font-serif text-2xl text-paper leading-snug">Present Day</div>
-              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Now</div>
+              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                Now
+              </div>
             </div>
             <div className="mt-10 h-px bg-border" />
           </div>
           <div className="bg-midnight p-8 md:p-10 md:col-span-9 space-y-4 text-base leading-[1.85] text-paper/80">
             <p>
               Today, the United Human Organization stands as a
-              <span className="text-paper font-medium"> global law and advocacy organization</span> — one of
-              the few in India to have fused high-court legal practice with active social and environmental
-              campaigns under a single institutional identity.
+              <span className="text-paper font-medium"> global law and advocacy organization</span>{" "}
+              — one of the few in India to have fused high-court legal practice with active social
+              and environmental campaigns under a single institutional identity.
             </p>
             <p>
-              The legal work is serious and ongoing: criminal defence, corporate counsel, constitutional
-              litigation, and human-rights matters before India's highest courts. The civic work runs in
-              parallel — tree planting, peace frameworks, community Saturdays, martial arts education at
-              the Pathak Temple Martial Arts Monastery.
+              The legal work is serious and ongoing: criminal defence, corporate counsel,
+              constitutional litigation, and human-rights matters before India's highest courts. The
+              civic work runs in parallel — tree planting, peace frameworks, community Saturdays,
+              martial arts education at the Pathak Temple Martial Arts Monastery.
             </p>
             <p>
-              None of it is accidental. It is the product of a philosophy that refuses to separate the
-              courtroom from the community, or the law from the land. Avinash Pathak continues to lead
-              both arms personally — as advocate, as writer, as founder.
+              None of it is accidental. It is the product of a philosophy that refuses to separate
+              the courtroom from the community, or the law from the land. Avinash Pathak continues
+              to lead both arms personally — as advocate, as writer, as founder.
             </p>
             <div className="mt-6 border border-gold/40 bg-navy/60 px-6 py-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold mb-3">Founding Motto</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold mb-3">
+                Founding Motto
+              </p>
               <p className="font-serif text-2xl text-paper leading-snug">
                 "We the Human of Earth."
               </p>
@@ -426,15 +526,32 @@ function About() {
       <section className="paper-section">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:grid-cols-12">
           <div className="md:col-span-6">
-            <img src={library} alt="The library" width={1600} height={1000} loading="lazy" className="w-full" />
+            <img
+              src={library}
+              alt="The library"
+              width={1600}
+              height={1000}
+              loading="lazy"
+              className="w-full"
+            />
           </div>
           <div className="md:col-span-6 flex flex-col justify-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-steel">The Writer</p>
-            <h2 className="mt-3 font-serif text-4xl text-navy">Nineteen books, and still counting.</h2>
-            <p className="mt-6 text-base leading-relaxed text-navy/80">
-              Avinash's writing runs parallel to his practice — essays, monographs, and public philosophy on ecology, rights, and the future of the Indian civic imagination. The most read among them are the works around <em>The Great Aryan Dream</em> and <em>World Peace Treaty</em>.
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-steel">
+              The Writer
             </p>
-            <Link to="/books" className="mt-8 inline-flex items-center gap-2 border-b border-navy/40 pb-1 text-sm text-navy hover:border-navy w-fit">
+            <h2 className="mt-3 font-serif text-4xl text-navy">
+              Nineteen books, and still counting.
+            </h2>
+            <p className="mt-6 text-base leading-relaxed text-navy/80">
+              Avinash's writing runs parallel to his practice — essays, monographs, and public
+              philosophy on ecology, rights, and the future of the Indian civic imagination. The
+              most read among them are the works around <em>The Great Aryan Dream</em> and{" "}
+              <em>World Peace Treaty</em>.
+            </p>
+            <Link
+              to="/books"
+              className="mt-8 inline-flex items-center gap-2 border-b border-navy/40 pb-1 text-sm text-navy hover:border-navy w-fit"
+            >
               Browse the writings →
             </Link>
           </div>

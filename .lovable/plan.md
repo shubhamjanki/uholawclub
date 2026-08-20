@@ -1,4 +1,3 @@
-
 # UHO Law Club — Advocate Avinash Pathak
 
 An editorial, authority-forward website for a Supreme Court & High Court advocate based in Jhansi. Not a template-feeling AI site — restrained, human, with real photography and considered typography.
@@ -30,6 +29,7 @@ Each route ships its own `head()` with unique title/description/og text.
 ## Page-by-page
 
 ### / (Home — hero grid)
+
 - Slim top bar: UHO seal + "UHO Law Club · Jhansi" + nav (About, Practice, Books, Initiatives, Appointment, Contact) + "Book consultation" outline button.
 - **Hero grid** (asymmetric 12-col):
   - Left 7 cols: eyebrow "Advocate · Supreme Court & High Courts", H1 in Libre Baskerville — "Counsel with conviction. Advocacy with conscience." Sub in IBM Plex — one-line positioning referencing 8+ years practice and Bundelkhand roots. Two CTAs: "Book a consultation" (solid paper on navy) + "Read the practice" (ghost).
@@ -41,25 +41,31 @@ Each route ships its own `head()` with unique title/description/og text.
 - **Contact call-to-action** — office hours, address, phone `+91 9305770340`, email — with a clean form CTA.
 
 ### /about
+
 - Long-form biography split into "The advocate" and "The writer". Timeline of milestones (2017–2020 ALS Corporate Law → 2020–2023 founded UHO Law Club → Supreme Court practice). Includes the "Milestone of Avinash Pathak · Born 1997" note. Devanagari pull-quote treated as editorial art.
 
 ### /practice
+
 - Detailed practice areas with matter types, courts appeared, engagement model.
 
 ### /books
+
 - Grid of authored works (19+ placeholders with generated cover art), each with year + one-line description. "Writer to live for Earth" tagline as chapter opener.
 
 ### /initiatives
+
 - Three sections: **United Human Organization**, **Green Bharat Great Bharat** (Plant a tree on your birthday), **Saturday for Society**. Includes the "The Great Aryan Dream · World Peace Treaty" ethos block, tastefully.
 
 ### /appointment
+
 - Three tiers as editorial cards, not pricing-table SaaS:
   - Consultation — ₹11,000 / $134
-  - UHO Card Holder — ₹844 / $10 per session
+  - UHO Card Holder — ₹1100 / $10 per session
   - As Writer engagement — ₹1,00,000 / $1,220
 - Below tiers: booking form (name, email, phone, matter type, preferred date, message) → posts to a simple TanStack server function that emails the office (stub for now; wire real email when Cloud is enabled later).
 
 ### /contact
+
 - Office block: UHO Law Club, near Bundelkhand University, Jhansi. Hours 10 AM – 4 PM (Mon–Fri, Bail 3–4). Email, WhatsApp `9305770340`, Website `https://www.uholawclub.in`, X/Twitter `@UHOlawclub`, Instagram `@uholawclub`, LinkedIn `UHO Law Club`, blog. Simple contact form + static map illustration.
 
 ## Technical notes
@@ -73,6 +79,7 @@ Each route ships its own `head()` with unique title/description/og text.
 - SEO: unique `head()` per route; `og:image` only on leaf routes that have a real hero image URL.
 
 ## Out of scope (ask before adding)
+
 - Real email delivery / DB persistence for the appointment form
 - Multi-language (Hindi) full-site translation — Hindi used as editorial accents only
 - Blog CMS — linking out to existing blogspot for now

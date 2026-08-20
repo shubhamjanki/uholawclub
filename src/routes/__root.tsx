@@ -17,7 +17,7 @@ import { LegalModals, type LegalModalType } from "../components/LegalModals";
 import logo1 from "../assets/WhatsApp Image 2026-07-29 at 19.28.20 (4).jpeg";
 
 import { LanguageProvider, LanguageSwitcher, useLanguage } from "../lib/LanguageContext";
-
+import { Twitter, Instagram, Linkedin } from "lucide-react";
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
@@ -51,12 +51,20 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <p className="mt-4 text-sm text-muted-foreground">Please try again in a moment.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <button
-            onClick={() => { router.invalidate(); reset(); }}
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
             className="inline-flex items-center justify-center bg-paper px-5 py-2 text-sm text-navy hover:bg-paper/90"
           >
             Try again
           </button>
-          <a href="/" className="inline-flex items-center justify-center border border-paper/30 px-5 py-2 text-sm hover:bg-paper/5">Go home</a>
+          <a
+            href="/"
+            className="inline-flex items-center justify-center border border-paper/30 px-5 py-2 text-sm hover:bg-paper/5"
+          >
+            Go home
+          </a>
         </div>
       </div>
     </div>
@@ -69,10 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "UHO Law Club — Chambers of Adv. Avinash Pathak, Jhansi" },
-      { name: "description", content: "UHO Law Club & Chambers of Advocate Avinash Pathak. Supreme Court & High Court practice in criminal, corporate and constitutional law. Founder, United Human Organization." },
+      {
+        name: "description",
+        content:
+          "UHO Law Club & Chambers of Advocate Avinash Pathak. Supreme Court & High Court practice in criminal, corporate and constitutional law. Founder, United Human Organization.",
+      },
       { name: "author", content: "UHO Law Club" },
       { property: "og:title", content: "UHO Law Club — Adv. Avinash Pathak" },
-      { property: "og:description", content: "Counsel with conviction. Advocacy with conscience. Chambers based in Jhansi, practising before the Supreme Court and High Courts." },
+      {
+        property: "og:description",
+        content:
+          "Counsel with conviction. Advocacy with conscience. Chambers based in Jhansi, practising before the Supreme Court and High Courts.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@theUHOHouse" },
@@ -82,7 +98,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: logo1, type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -95,60 +114,62 @@ const legalServiceSchema = {
   "@context": "https://schema.org",
   "@type": "LegalService",
   "@id": "https://uholawclub.com/#legalservice",
-  "name": "UHO Law Club",
-  "alternateName": ["uholawclub", "uholawclub.com", "UHO Law Club Asia", "Chambers of Advocate Avinash Pathak"],
-  "url": "https://uholawclub.com",
-  "telephone": "+919532660984",
-  "email": "uholawclub@gmail.com",
-  "priceRange": "₹844 - ₹11,000",
-  "address": {
+  name: "UHO Law Club",
+  alternateName: [
+    "uholawclub",
+    "uholawclub.com",
+    "UHO Law Club Asia",
+    "Chambers of Advocate Avinash Pathak",
+  ],
+  url: "https://uholawclub.com",
+  telephone: "+919532660984",
+  email: "uholawclub@gmail.com",
+  priceRange: "₹1100 - ₹11,000",
+  address: {
     "@type": "PostalAddress",
-    "streetAddress": "Near Bundelkhand University",
-    "addressLocality": "Jhansi",
-    "addressRegion": "Uttar Pradesh",
-    "postalCode": "284128",
-    "addressCountry": "IN"
+    streetAddress: "Near Bundelkhand University",
+    addressLocality: "Jhansi",
+    addressRegion: "Uttar Pradesh",
+    postalCode: "284128",
+    addressCountry: "IN",
   },
-  "geo": {
+  geo: {
     "@type": "GeoCoordinates",
-    "latitude": 25.4484,
-    "longitude": 78.5685
+    latitude: 25.4484,
+    longitude: 78.5685,
   },
-  "openingHoursSpecification": [
+  openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      "opens": "10:00",
-      "closes": "16:00"
-    }
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "10:00",
+      closes: "16:00",
+    },
   ],
-  "founder": {
+  founder: {
     "@type": "Person",
-    "name": "Adv. Avinash Pathak",
-    "jobTitle": "Advocate & Writer",
-    "worksFor": {
+    name: "Adv. Avinash Pathak",
+    jobTitle: "Advocate & Writer",
+    worksFor: {
       "@type": "LegalService",
-      "name": "UHO Law Club"
-    }
+      name: "UHO Law Club",
+    },
   },
-  "areaServed": [
-    { "@type": "City", "name": "Jhansi" },
-    { "@type": "State", "name": "Uttar Pradesh" },
-    { "@type": "Country", "name": "India" }
+  areaServed: [
+    { "@type": "City", name: "Jhansi" },
+    { "@type": "State", name: "Uttar Pradesh" },
+    { "@type": "Country", name: "India" },
   ],
-  "sameAs": [
-    "https://twitter.com/theUHOHouse",
-    "https://instagram.com/theuhohouse"
-  ]
+  sameAs: ["https://twitter.com/theUHOHouse", "https://instagram.com/theuhohouse"],
 };
 
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": "https://uholawclub.com/#website",
-  "name": "UHO Law Club",
-  "alternateName": ["uholawclub", "uholawclub.com"],
-  "url": "https://uholawclub.com"
+  name: "UHO Law Club",
+  alternateName: ["uholawclub", "uholawclub.com"],
+  url: "https://uholawclub.com",
 };
 
 function RootShell({ children }: { children: ReactNode }) {
@@ -197,7 +218,6 @@ function Seal({ className = "" }: { className?: string }) {
 }
 
 function Header() {
-  const [open, setOpen] = useState(false);
   const { t } = useLanguage();
 
   const practiceTicker = [
@@ -212,24 +232,23 @@ function Header() {
 
   return (
     <header className="w-full">
-      {/* Top Gold Parchment Banner — fixed */}
-      <div className="fixed top-0 left-0 right-0 z-40 w-full bg-gradient-to-r from-[#d9b867] via-[#c9a84c] to-[#d9b867] text-navy border-b border-[#a88734] px-4 py-2.5 sm:px-8 shadow-md">
+      {/* Top Banner — fixed */}
+      <div className="fixed top-0 left-0 right-0 z-40 w-full bg-black text-white border-b border-white/20 px-4 py-2.5 sm:px-8 shadow-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-
           {/* Left Brand Identity */}
           <Link to="/" className="group flex items-center gap-3 text-navy min-w-0">
             {/* Logo Seal */}
             <Seal className="h-14 w-14 sm:h-16 sm:w-16" />
 
             {/* Vertical Line Divider */}
-            <div className="h-8 w-px bg-navy/30 mx-1 sm:mx-2 shrink-0" />
+            <div className="h-8 w-px bg-white/30 mx-1 sm:mx-2 shrink-0" />
 
             {/* Title & Subtitle */}
             <div className="leading-tight min-w-0">
-              <h1 className="truncate font-serif text-lg sm:text-2xl font-bold tracking-tight text-navy group-hover:opacity-90 transition-opacity">
+              <h1 className="truncate font-serif text-lg sm:text-2xl font-bold tracking-tight text-white group-hover:opacity-90 transition-opacity">
                 {t("header.title")}
               </h1>
-              <p className="truncate font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.24em] text-navy/80">
+              <p className="truncate font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.24em] text-white/80">
                 {t("header.subtitle")}
               </p>
             </div>
@@ -237,7 +256,7 @@ function Header() {
 
           {/* Right Location & Action */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-            <span className="hidden md:inline-block font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-navy/85">
+            <span className="hidden md:inline-block font-mono text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-white/85">
               {t("header.location")}
             </span>
 
@@ -251,18 +270,7 @@ function Header() {
               <span>{t("nav.bookNow")}</span>
             </Link> */}
 
-            {/* Mobile Toggle Button */}
-            <button
-              aria-label="Toggle navigation menu"
-              onClick={() => setOpen((v) => !v)}
-              className="lg:hidden inline-flex h-9 w-9 items-center justify-center border border-navy/40 bg-navy/10 text-navy hover:bg-navy hover:text-[#d4af37] transition-colors"
-            >
-              <div className="space-y-1">
-                <div className={`h-0.5 w-4 bg-current transition-all ${open ? "rotate-45 translate-y-1.5" : ""}`} />
-                <div className={`h-0.5 w-4 bg-current transition-all ${open ? "opacity-0" : ""}`} />
-                <div className={`h-0.5 w-4 bg-current transition-all ${open ? "-rotate-45 -translate-y-1.5" : ""}`} />
-              </div>
-            </button>
+            {/* Mobile menu was removed in favor of BottomNav */}
           </div>
         </div>
       </div>
@@ -271,17 +279,18 @@ function Header() {
       <div className="h-[76px] sm:h-[84px]" aria-hidden />
 
       {/* Main Nav Links & Practice Area Ribbon */}
-      <div className="w-full bg-[#0a1226] text-paper border-b border-gold/20">
+      <div className="w-full bg-black text-white border-b border-gold/20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-
           {/* Main Navigation Pages Row */}
-          <nav className="hidden lg:flex items-center justify-center gap-8 py-2.5 border-b border-paper/10 text-xs font-mono uppercase tracking-[0.18em]">
+          <nav className="hidden lg:flex items-center justify-center gap-8 py-2.5 border-b border-white/10 text-xs font-mono uppercase tracking-[0.18em]">
             {NAV.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
-                className="text-paper/80 transition-colors hover:text-gold py-1"
-                activeProps={{ className: "text-gold font-bold underline decoration-gold/60 underline-offset-4" }}
+                className="text-white/80 transition-colors hover:text-gold py-1"
+                activeProps={{
+                  className: "text-gold font-bold underline decoration-gold/60 underline-offset-4",
+                }}
               >
                 {t(item.key)}
               </Link>
@@ -304,49 +313,7 @@ function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu Drawer — fixed below the gold banner */}
-      {open && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="lg:hidden fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
-            onClick={() => setOpen(false)}
-            aria-hidden
-          />
-          {/* Drawer */}
-          <div className="lg:hidden fixed top-[76px] sm:top-[84px] left-0 right-0 z-35 border-t border-gold/20 bg-[#081023] px-6 py-6 shadow-2xl animate-in slide-in-from-top-2 duration-200">
-            <div className="flex items-center gap-3 pb-4 border-b border-paper/10 mb-4">
-              <Seal className="h-10 w-10" />
-              <div>
-                <div className="font-serif text-base font-bold text-gold">UHO LAW CLUB</div>
-                <div className="text-xs text-paper/80">Chambers of Adv. Avinash Pathak</div>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {NAV.map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-2 rounded-lg bg-paper/5 px-3 py-2.5 text-sm font-medium text-paper/90 transition-colors hover:bg-gold/15 hover:text-gold"
-                  activeProps={{ className: "bg-gold/20 text-gold font-semibold ring-1 ring-gold/40" }}
-                >
-                  <span>{t(item.key)}</span>
-                </Link>
-              ))}
-            </div>
-            <div className="mt-5 pt-4 border-t border-paper/10 flex flex-col gap-2.5">
-              <Link
-                to="/appointment"
-                onClick={() => setOpen(false)}
-                className="w-full text-center rounded bg-gold py-3 font-mono text-xs font-semibold uppercase tracking-wider text-navy hover:bg-gold/90 transition-colors shadow"
-              >
-                {t("nav.bookNow")}
-              </Link>
-            </div>
-          </div>
-        </>
-      )}
+
     </header>
   );
 }
@@ -361,7 +328,9 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
             <div className="flex items-center gap-3.5">
               <Seal className="h-12 w-12" />
               <div>
-                <div className="font-serif text-xl font-bold text-gold tracking-wide">{t("header.title")}</div>
+                <div className="font-serif text-xl font-bold text-gold tracking-wide">
+                  {t("header.title")}
+                </div>
                 <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
                   United Human Organization
                 </div>
@@ -370,10 +339,14 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
             <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
               {t("footer.desc")}
             </p>
-            <p className="mt-6 font-devanagari text-lg text-paper/90">कार्यालय अविनाश पाठक — लेखक व अधिवक्ता</p>
+            <p className="mt-6 font-devanagari text-lg text-paper/90">
+              कार्यालय अविनाश पाठक — लेखक व अधिवक्ता
+            </p>
           </div>
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold font-semibold">{t("footer.chambers")}</div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold font-semibold">
+              {t("footer.chambers")}
+            </div>
             <ul className="mt-4 space-y-2.5 text-sm">
               {NAV.map((n) => (
                 <li key={n.to}>
@@ -385,7 +358,9 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
             </ul>
           </div>
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold font-semibold">{t("footer.reach")}</div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold font-semibold">
+              {t("footer.reach")}
+            </div>
             <ul className="mt-4 space-y-2.5 text-sm text-paper/80">
               <li>Jhansi, Bundelkhand, Uttar Pradesh</li>
               <li>
@@ -394,12 +369,20 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
                 </a>
               </li>
               <li>
-                <a href="mailto:uholawclub@gmail.com" className="transition-colors hover:text-gold break-words">
+                <a
+                  href="mailto:uholawclub@gmail.com"
+                  className="transition-colors hover:text-gold break-words"
+                >
                   uholawclub@gmail.com
                 </a>
               </li>
               <li>
-                <a href="https://twitter.com/theUHOHouse" target="_blank" rel="noreferrer" className="transition-colors hover:text-gold">
+                <a
+                  href="https://twitter.com/theUHOHouse"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="transition-colors hover:text-gold"
+                >
                   @UHOlawclub
                 </a>
               </li>
@@ -409,15 +392,24 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
 
         {/* Legal links row */}
         <div className="mt-12 flex flex-wrap items-center justify-center md:justify-start gap-4 border-t border-paper/10 pt-6 text-xs text-paper/75 font-medium">
-          <button onClick={() => onOpenLegalModal("privacy")} className="hover:text-gold underline decoration-gold/40 cursor-pointer">
+          <button
+            onClick={() => onOpenLegalModal("privacy")}
+            className="hover:text-gold underline decoration-gold/40 cursor-pointer"
+          >
             {t("footer.privacy")}
           </button>
           <span>•</span>
-          <button onClick={() => onOpenLegalModal("terms")} className="hover:text-gold underline decoration-gold/40 cursor-pointer">
+          <button
+            onClick={() => onOpenLegalModal("terms")}
+            className="hover:text-gold underline decoration-gold/40 cursor-pointer"
+          >
             {t("footer.terms")}
           </button>
           <span>•</span>
-          <button onClick={() => onOpenLegalModal("disclaimer")} className="hover:text-gold underline decoration-gold/40 cursor-pointer">
+          <button
+            onClick={() => onOpenLegalModal("disclaimer")}
+            className="hover:text-gold underline decoration-gold/40 cursor-pointer"
+          >
             {t("footer.disclaimer")}
           </button>
         </div>
@@ -435,7 +427,7 @@ function Footer({ onOpenLegalModal }: { onOpenLegalModal: (type: LegalModalType)
 
 const WA_NUMBER = "919532660984"; // WhatsApp number in international format without '+' or dashes
 const WA_MESSAGE = encodeURIComponent(
-  "Hello, I'd like to book a consultation with Adv. Avinash Pathak — UHO Law Club."
+  "Hello, I'd like to book a consultation with Adv. Avinash Pathak — UHO Law Club.",
 );
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
@@ -492,6 +484,40 @@ function WhatsAppButton() {
   );
 }
 
+function FloatingSocialBar() {
+  return (
+    <div className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden flex-col gap-4 md:flex">
+      <a
+        href="https://twitter.com/theUHOHouse"
+        target="_blank"
+        rel="noreferrer"
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-navy border border-gold/20 text-paper shadow-lg transition-all hover:scale-110 hover:bg-gold hover:text-navy"
+        aria-label="Twitter"
+      >
+        <Twitter className="h-4 w-4" />
+      </a>
+      <a
+        href="https://instagram.com/theuhohouse"
+        target="_blank"
+        rel="noreferrer"
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-navy border border-gold/20 text-paper shadow-lg transition-all hover:scale-110 hover:bg-gold hover:text-navy"
+        aria-label="Instagram"
+      >
+        <Instagram className="h-4 w-4" />
+      </a>
+      <a
+        href="https://linkedin.com/"
+        target="_blank"
+        rel="noreferrer"
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-navy border border-gold/20 text-paper shadow-lg transition-all hover:scale-110 hover:bg-gold hover:text-navy"
+        aria-label="LinkedIn"
+      >
+        <Linkedin className="h-4 w-4" />
+      </a>
+    </div>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [activeLegalModal, setActiveLegalModal] = useState<LegalModalType>(null);
@@ -506,6 +532,7 @@ function RootComponent() {
           </main>
           <Footer onOpenLegalModal={setActiveLegalModal} />
           <BottomNav onOpenLegalModal={setActiveLegalModal} />
+          <FloatingSocialBar />
           <WhatsAppButton />
           <LegalModals activeModal={activeLegalModal} onClose={() => setActiveLegalModal(null)} />
         </div>

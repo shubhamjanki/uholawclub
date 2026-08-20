@@ -1,22 +1,29 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
+import QRCode from "qrcode";
 import tree from "../assets/tree.jpg";
 import advocateImg2 from "../assets/WhatsApp Image 2026-07-29 at 19.28.22.jpeg";
 import { useLanguage } from "../lib/LanguageContext";
-import mapImage from '../assets/map.jpeg';
+import mapImage from "../assets/map.jpeg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "UHO Law Club | Adv. Avinash Pathak – Jhansi Law Firm" },
-      { name: "description", content: "Chambers of Advocate Avinash Pathak in Jhansi. Expert legal representation in criminal defence, corporate advisory, and constitutional law before High Courts & Supreme Court." },
+      {
+        name: "description",
+        content:
+          "Chambers of Advocate Avinash Pathak in Jhansi. Expert legal representation in criminal defence, corporate advisory, and constitutional law before High Courts & Supreme Court.",
+      },
       { property: "og:title", content: "UHO Law Club | Adv. Avinash Pathak – Jhansi Law Firm" },
-      { property: "og:description", content: "Counsel with conviction. Advocacy with conscience. Chambers based in Jhansi, practising before the Supreme Court and High Courts." },
+      {
+        property: "og:description",
+        content:
+          "Counsel with conviction. Advocacy with conscience. Chambers based in Jhansi, practising before the Supreme Court and High Courts.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://uholawclub.com/" },
     ],
-    links: [
-      { rel: "canonical", href: "https://uholawclub.com/" },
-    ],
+    links: [{ rel: "canonical", href: "https://uholawclub.com/" }],
   }),
   component: Index,
 });
@@ -27,16 +34,30 @@ function useInView(options?: IntersectionObserverInit) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setInView(true); obs.disconnect(); }
-    }, { threshold: 0.12, ...options });
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.12, ...options },
+    );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
   return { ref, inView };
 }
 
-function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function FadeIn({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const { ref, inView } = useInView();
   return (
     <div
@@ -53,54 +74,202 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
+/* ─── UPI helpers (shared with BookingForm & ContactForm) ─────────── */
+const UPI_ID = "uho@sbi";
+const UPI_NAME = "UHO Law Club";
+
+const TIER_AMOUNTS: Record<string, number> = {
+  "Legal consultation — ₹11,000": 11000,
+  "UHO Card Holder — ₹1100": 1100,
+  // "Writer engagement — ₹1,00,000": 100000,
+  // "Not sure yet": 0,
+};
+
+function buildUpiUrl(amount: number, note: string) {
+  const params = new URLSearchParams({
+    pa: UPI_ID,
+    pn: UPI_NAME,
+    am: amount.toFixed(2),
+    cu: "INR",
+    tn: note,
+  });
+  return `upi://pay?${params.toString()}`;
+}
+
+function UpiPaymentModal({
+  tier,
+  amount,
+  name,
+  onClose,
+  onDone,
+}: {
+  tier: string;
+  amount: number;
+  name: string;
+  onClose: () => void;
+  onDone: () => void;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const upiUrl = buildUpiUrl(amount, `${tier} - ${name}`);
+
+  useEffect(() => {
+    if (canvasRef.current && amount > 0) {
+      QRCode.toCanvas(canvasRef.current, upiUrl, {
+        width: 220,
+        margin: 2,
+        color: { dark: "#0a0f1e", light: "#f5f0e8" },
+      });
+    }
+  }, [upiUrl, amount]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm px-4">
+      <div className="relative w-full max-w-md border border-gold/60 bg-midnight shadow-2xl">
+        {/* Header */}
+        <div className="border-b border-border px-8 py-5 flex items-center justify-between">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Payment</p>
+            <h2 className="mt-1 font-serif text-xl text-paper">Scan to Pay via UPI</h2>
+          </div>
+          <button
+            onClick={onClose}
+            className="ml-4 text-muted-foreground hover:text-paper transition-colors text-xl leading-none"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        {/* Body */}
+        <div className="px-8 py-7 flex flex-col items-center gap-5">
+          {/* Amount badge */}
+          <div className="w-full border border-border bg-navy/60 px-5 py-4 text-center">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+              {tier}
+            </p>
+            {amount > 0 ? (
+              <p className="mt-2 font-serif text-4xl text-gold">
+                ₹{amount.toLocaleString("en-IN")}
+              </p>
+            ) : (
+              <p className="mt-2 font-serif text-lg text-paper/70">Amount to be confirmed</p>
+            )}
+            <p className="mt-1 font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
+              UPI · {UPI_ID}
+            </p>
+          </div>
+          {/* QR */}
+          {amount > 0 ? (
+            <div className="border border-border bg-paper p-3">
+              <canvas ref={canvasRef} />
+              <p className="mt-2 text-center font-mono text-[9px] text-navy/60 uppercase tracking-[0.2em]">
+                Scan with any UPI app
+              </p>
+            </div>
+          ) : (
+            <div className="border border-border bg-navy/40 px-6 py-8 text-center text-sm text-paper/60">
+              Payment amount will be shared after we review your requirement.
+            </div>
+          )}
+          {/* Deep-link */}
+          {amount > 0 && (
+            <a
+              href={upiUrl}
+              className="w-full inline-flex items-center justify-center gap-3 bg-[#00897b] px-6 py-3 text-sm font-medium text-white hover:bg-[#00695c] transition-colors"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-5 w-5 fill-white"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.25 17.5l-4-4 1.41-1.41 2.59 2.58 5.59-5.58L17.75 10.5l-7 7z" />
+              </svg>
+              Open UPI App to Pay
+            </a>
+          )}
+          {amount > 0 && (
+            <p className="text-center font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground">
+              GPay · PhonePe · Paytm · BHIM · Any UPI App
+            </p>
+          )}
+          {/* Confirm */}
+          <div className="w-full border-t border-border pt-5 flex flex-col gap-3">
+            <button
+              onClick={onDone}
+              className="w-full bg-paper px-6 py-3 text-sm text-navy hover:bg-gold transition-colors"
+            >
+              I've paid — confirm my appointment →
+            </button>
+            <p className="text-center text-[11px] text-muted-foreground leading-relaxed">
+              After payment, share the UTR on WhatsApp or email.
+              <br />
+              <span className="text-paper/60">uholawclub@gmail.com · +91 95326 60984</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ContactForm() {
   const [sent, setSent] = useState(false);
   const { t } = useLanguage();
   return (
     <div className="grid gap-px bg-border md:grid-cols-12">
       <div className="bg-navy p-8 md:col-span-4 flex flex-col justify-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">{t("contact.writeIn")}</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">
+          {t("contact.writeIn")}
+        </p>
         <h3 className="mt-3 font-serif text-2xl text-paper">{t("contact.sendMessage")}</h3>
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
           {t("contact.writeInDesc")}
         </p>
-        <p className="mt-6 text-xs text-muted-foreground">
-          {t("contact.writeInConf")}
-        </p>
+        <p className="mt-6 text-xs text-muted-foreground">{t("contact.writeInConf")}</p>
       </div>
       <div className="bg-midnight p-8 md:col-span-8">
         {sent ? (
           <div className="flex h-full flex-col justify-center py-4">
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">{t("form.received")}</div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">
+              {t("form.received")}
+            </div>
             <h4 className="mt-3 font-serif text-2xl text-paper">{t("form.thankYou")}</h4>
             <p className="mt-3 text-sm text-muted-foreground">
-              {t("form.thankYouDesc")} <a href="tel:+919532660984" className="text-paper hover:text-gold">+91 9532660984</a> {t("form.thankYouSuffix")}
+              {t("form.thankYouDesc")}{" "}
+              <a href="tel:+919532660984" className="text-paper hover:text-gold">
+                +91 9532660984
+              </a>{" "}
+              {t("form.thankYouSuffix")}
             </p>
           </div>
         ) : (
-          <form onSubmit={e => { e.preventDefault(); setSent(true); }} className="grid gap-5">
-            <div className="grid gap-5 sm:grid-cols-2">
-              <FormField label={t("form.name")} name="name" required />
-              <FormField label={t("form.email")} name="email" type="email" required />
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2">
-              <FormField label={t("form.phone")} name="phone" type="tel" />
-              <FormField label={t("form.country")} name="country" placeholder={t("form.countryPlaceholder")} />
-            </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSent(true);
+            }}
+            className="flex flex-col gap-4 sm:gap-6"
+          >
+            <FormField label={t("form.name")} name="name" required />
+            <FormField label={t("form.email")} name="email" type="email" required />
+            <FormField label={t("form.phone")} name="phone" type="tel" />
             <FormField label={t("contact.subject")} name="subject" />
-            <div>
-              <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.yourMessage")}</label>
+            
+            <div className="flex flex-col gap-2">
+              <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/90">
+                {t("contact.yourMessage")}
+              </label>
               <textarea
                 name="message"
-                rows={4}
+                rows={2}
                 required
-                className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none"
+                className="w-full resize-y rounded-md border border-border bg-white px-3 py-2.5 sm:px-4 sm:py-3.5 text-sm text-foreground placeholder:text-muted-foreground transition-all focus:border-black/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-black/20"
                 placeholder={t("contact.messagePlaceholder")}
               />
             </div>
+            
             <button
               type="submit"
-              className="inline-flex w-fit items-center gap-2 bg-paper px-6 py-3 text-sm text-navy hover:bg-gold transition-colors"
+              className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-md bg-black px-6 py-3 sm:py-4 text-sm font-semibold text-white transition-all hover:bg-black/80 active:scale-[0.98]"
             >
               Book Appointment
             </button>
@@ -112,19 +281,29 @@ function ContactForm() {
 }
 
 function FormField({
-  label, name, type = "text", required = false, placeholder = "",
+  label,
+  name,
+  type = "text",
+  required = false,
+  placeholder = "",
 }: {
-  label: string; name: string; type?: string; required?: boolean; placeholder?: string;
+  label: string;
+  name: string;
+  type?: string;
+  required?: boolean;
+  placeholder?: string;
 }) {
   return (
-    <div>
-      <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{label}</label>
+    <div className="flex flex-col gap-2">
+      <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/90">
+        {label}
+      </label>
       <input
         name={name}
         type={type}
         required={required}
         placeholder={placeholder}
-        className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none"
+        className="w-full rounded-md border border-border bg-white px-3 py-2.5 sm:px-4 sm:py-3.5 text-sm text-foreground placeholder:text-muted-foreground transition-all focus:border-black/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-black/20"
       />
     </div>
   );
@@ -134,187 +313,141 @@ function Stat({ n, label }: { n: string; label: string }) {
   return (
     <div className="border-l border-border pl-4">
       <div className="font-serif text-3xl text-paper">{n}</div>
-      <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{label}</div>
+      <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+        {label}
+      </div>
     </div>
   );
 }
 
 function BookingForm() {
-  const [sent, setSent] = useState(false);
+  const [paymentInfo, setPaymentInfo] = useState<{
+    show: boolean;
+    tier: string;
+    amount: number;
+    name: string;
+  }>({ show: false, tier: "", amount: 0, name: "" });
+  const [confirmed, setConfirmed] = useState(false);
   const { t } = useLanguage();
 
-  if (sent) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const tier = (fd.get("tier") as string) || "Legal consultation — ₹11,000";
+    const name = (fd.get("name") as string) || "Client";
+    const amount = TIER_AMOUNTS[tier] ?? 0;
+    setPaymentInfo({ show: true, tier, amount, name });
+  };
+
+  if (confirmed) {
     return (
       <div className="border border-gold/50 bg-navy p-8">
-        <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">{t("form.received")}</div>
-        <h3 className="mt-4 font-serif text-2xl text-paper">{t("form.thankYou")}</h3>
+        <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Confirmed</div>
+        <h3 className="mt-4 font-serif text-2xl text-paper">
+          Thank you — appointment request received.
+        </h3>
         <p className="mt-3 text-sm text-muted-foreground">
-          {t("form.thankYouDesc")} <a href="tel:+919532660984" className="text-paper hover:text-gold">+91 9532660984</a> {t("form.thankYouSuffix")}
+          Please share your UPI transaction ID / UTR via WhatsApp or email. The chambers will
+          confirm within one working day.
         </p>
+        <div className="mt-6 flex gap-4 flex-wrap">
+          <a
+            href="https://wa.me/919532660984"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 border border-green-500/60 bg-green-900/20 px-4 py-2 text-xs text-green-400 hover:bg-green-900/40 transition-colors"
+          >
+            WhatsApp UTR →
+          </a>
+          <a
+            href="mailto:uholawclub@gmail.com"
+            className="inline-flex items-center gap-2 border border-border px-4 py-2 text-xs text-paper hover:border-gold hover:text-gold transition-colors"
+          >
+            Email UTR →
+          </a>
+        </div>
       </div>
     );
   }
 
   return (
-    // <form
-    //   onSubmit={e => { e.preventDefault(); setSent(true); }}
-    //   className="grid gap-5"
-    // >
-    //   <div className="grid gap-5 sm:grid-cols-2">
-    //     <FormField label={t("form.name")} name="name" required />
-    //     <FormField label={t("form.email")} name="email" type="email" required />
-    //   </div>
-    //   <div className="grid gap-5 sm:grid-cols-2">
-    //     <FormField label={t("form.phone")} name="phone" type="tel" />
-    //     <FormField label={t("form.date")} name="date" type="date" />
-    //   </div>
-    //   <div>
-    //     <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("form.mode")}</label>
-    //     <select name="mode" className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none">
-    //       <option>{t("form.modeOnline")}</option>
-    //       <option>{t("form.modeInPerson")}</option>
-    //       <option>{t("form.modePhone")}</option>
-    //     </select>
-    //   </div>
-    //   <div>
-    //     <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("form.country")}</label>
-    //     <input name="country" type="text" placeholder={t("form.countryPlaceholder")} className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none" />
-    //   </div>
-    //   <div>
-    //     <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("form.tier")}</label>
-    //     <select name="tier" className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none">
-    //       <option>{t("form.tierLegal")}</option>
-    //       <option>{t("form.tierUHO")}</option>
-    //       <option>{t("form.tierWriter")}</option>
-    //       <option>{t("form.tierUnsure")}</option>
-    //     </select>
-    //   </div>
-    //   <div>
-    //     <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("form.note")}</label>
-    //     <textarea name="note" rows={4} required placeholder={t("form.notePlaceholder")} className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none" />
-    //   </div>
-    //   <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-    //     <button type="submit" className="inline-flex items-center justify-center bg-paper px-6 py-3 text-sm text-navy hover:bg-gold transition-colors">
-    //       {t("form.submit")}
-    //     </button>
-    //     <p className="text-[11px] text-muted-foreground">{t("form.confidential")}</p>
-    //   </div>
-    // </form>
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSent(true);
-      }}
-      className="space-y-4"
-    >
-      {/* Name & Email */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <FormField
-          label={t("form.name")}
-          name="name"
-          required
+    <>
+      {paymentInfo.show && (
+        <UpiPaymentModal
+          tier={paymentInfo.tier}
+          amount={paymentInfo.amount}
+          name={paymentInfo.name}
+          onClose={() => setPaymentInfo((p) => ({ ...p, show: false }))}
+          onDone={() => {
+            setPaymentInfo((p) => ({ ...p, show: false }));
+            setConfirmed(true);
+          }}
         />
+      )}
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6">
+        <FormField label={t("form.name")} name="name" required />
+        <FormField label={t("form.email")} name="email" type="email" required />
+        <FormField label={t("form.phone")} name="phone" type="tel" />
+        <FormField label={t("form.date")} name="date" type="date" />
 
-        <FormField
-          label={t("form.email")}
-          name="email"
-          type="email"
-          required
-        />
-      </div>
-
-      {/* Phone & Date */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <FormField
-          label={t("form.phone")}
-          name="phone"
-          type="tel"
-        />
-
-        <FormField
-          label={t("form.date")}
-          name="date"
-          type="date"
-        />
-      </div>
-
-      {/* Mode */}
-      <div>
-        <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-          {t("form.mode")}
-        </label>
-
-        <select
-          name="mode"
-          className="w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none"
-        >
-          <option>{t("form.modeOnline")}</option>
-          <option>{t("form.modeInPerson")}</option>
-          <option>{t("form.modePhone")}</option>
-        </select>
-      </div>
-
-      {/* Country + Service */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <div>
-          <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-            {t("form.country")}
+        {/* Mode */}
+        <div className="flex flex-col gap-2">
+          <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/90">
+            {t("form.mode")}
           </label>
-
-          <input
-            name="country"
-            type="text"
-            placeholder={t("form.countryPlaceholder")}
-            className="w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none"
-          />
+          <select
+            name="mode"
+            className="w-full appearance-none rounded-md border border-border bg-white px-3 py-2.5 sm:px-4 sm:py-3.5 text-sm text-foreground transition-all focus:border-black/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-black/20"
+          >
+            <option>{t("form.modeOnline")}</option>
+            <option>{t("form.modeInPerson")}</option>
+            <option>{t("form.modePhone")}</option>
+          </select>
         </div>
 
-        <div>
-          <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+        {/* Service */}
+        <div className="flex flex-col gap-2">
+          <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/90">
             {t("form.tier")}
           </label>
-
           <select
             name="tier"
-            className="w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none"
+            className="w-full appearance-none rounded-md border border-border bg-white px-3 py-2.5 sm:px-4 sm:py-3.5 text-sm text-foreground transition-all focus:border-black/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-black/20"
           >
             <option>{t("form.tierLegal")}</option>
             <option>{t("form.tierUHO")}</option>
-            <option>{t("form.tierWriter")}</option>
-            <option>{t("form.tierUnsure")}</option>
           </select>
         </div>
-      </div>
 
-      {/* Note */}
-      <div>
-        <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-          {t("form.note")}
-        </label>
+        {/* Note */}
+        <div className="flex flex-col gap-2">
+          <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/90">
+            {t("form.note")}
+          </label>
+          <textarea
+            name="note"
+            rows={2}
+            required
+            placeholder={t("form.notePlaceholder")}
+            className="w-full resize-y rounded-md border border-border bg-white px-3 py-2.5 sm:px-4 sm:py-3.5 text-sm text-foreground placeholder:text-muted-foreground transition-all focus:border-black/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-black/20"
+          />
+        </div>
 
-        <textarea
-          name="note"
-          rows={3}
-          required
-          placeholder={t("form.notePlaceholder")}
-          className="w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none"
-        />
-      </div>
-
-      {/* Button */}
-      <div className="flex items-center justify-between gap-4 flex-wrap">
-        <p className="text-[11px] text-muted-foreground">
-          {t("form.confidential")}
-        </p>
-
-        <button
-          type="submit"
-          className="inline-flex items-center justify-center bg-paper px-8 py-3 text-sm font-medium text-navy transition hover:bg-gold"
-        >
-          {t("form.submit")}
-        </button>
-      </div>
-    </form>
+        {/* Button */}
+        <div className="mt-1 flex flex-col gap-3">
+          <button
+            type="submit"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-black px-6 py-3 sm:py-4 text-sm font-semibold text-white transition-all hover:bg-black/80 active:scale-[0.98]"
+          >
+            Send Appointment &amp; Pay via UPI →
+          </button>
+          
+          <p className="text-center text-[11px] text-muted-foreground">
+            {t("form.confidential")}
+          </p>
+        </div>
+      </form>
+    </>
   );
 }
 
@@ -332,10 +465,9 @@ function Index() {
     <>
       {/* BOOK APPOINTMENT FORM — top of page */}
       <section className="border-b border-border bg-midnight">
-
         <div className="mx-auto grid max-w-7xl gap-px bg-border px-0 md:grid-cols-12">
           {/* Left — booking form */}
-          <div className="bg-navy/60 p-8 md:col-span-8">
+          <div className="bg-white/60 p-5 md:p-8 md:col-span-8">
             <BookingForm />
           </div>
 
@@ -403,9 +535,8 @@ function Index() {
         </div>
       </section>
 
-
-     {/* Credentials strip */}
-      < div className="border-y border-border" >
+      {/* Credentials strip */}
+      <div className="border-y border-border">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-10 gap-y-3 px-6 py-5 font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
           <span>UHO Law Club Asia </span>
           <span className="text-steel">·</span>
@@ -413,21 +544,28 @@ function Index() {
           <span className="text-steel">·</span>
           <span>UHO law club Africa</span>
         </div>
-      </div >
+      </div>
 
       {/* PRACTICE AREAS */}
-      < section className="mx-auto max-w-7xl px-6 py-24" >
+      <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="flex items-end justify-between gap-8 border-b border-border pb-6">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{t("practice.tag")}</p>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">{t("practice.title")}</h2>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">
+              {t("practice.tag")}
+            </p>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">
+              {t("practice.title")}
+            </h2>
           </div>
-          <Link to="/practice" className="hidden md:inline-flex items-center gap-2 text-sm text-paper/70 hover:text-paper">
+          <Link
+            to="/practice"
+            className="hidden md:inline-flex items-center gap-2 text-sm text-paper/70 hover:text-paper"
+          >
             {t("practice.viewAll")}
           </Link>
         </div>
         <div className="mt-10 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
-          {AREAS.map(a => (
+          {AREAS.map((a) => (
             <Link
               key={a.n}
               to="/practice"
@@ -444,7 +582,7 @@ function Index() {
             </Link>
           ))}
         </div>
-      </section >
+      </section>
 
       {/* SOCIAL MEDIA */}
       <section className="border-y border-border bg-paper">
@@ -453,18 +591,43 @@ function Index() {
             <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-steel">Connect</p>
             <h2 className="mt-3 font-serif text-4xl md:text-5xl text-navy">Follow the work.</h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-midnight/70">
-              Join the conversation across platforms — daily notes from court, essays on justice, and the movements growing out of Bundelkhand.
+              Join the conversation across platforms — daily notes from court, essays on justice,
+              and the movements growing out of Bundelkhand.
             </p>
           </FadeIn>
 
           <div className="mt-12 flex gap-px bg-border overflow-x-auto pb-4 scroll-smooth scrollbar-none">
             {[
-              { name: "Website", handle: "www.uholawclub.in", url: "https://www.uholawclub.in", desc: "Visit the official website for firm information, services, and contact details." },
-              { name: "Twitter", handle: "@UHOlawclub", url: "https://www.twitter.com/UHOlawclub", desc: "Daily commentary on law, constitutional rights, and public notices from the chambers." },
-              { name: "Instagram", handle: "@uholawclub", url: "https://www.instagram.com/uholawclub", desc: "Behind the scenes in chambers, civic action events, and photos from tree plantation drives." },
-              { name: "LinkedIn", handle: "UHO Law Club", url: "https://www.linkedin.com/company/UHOLawclub", desc: "Professional updates, company profile, and practice announcements." },
+              {
+                name: "Website",
+                handle: "www.uholawclub.in",
+                url: "https://www.uholawclub.in",
+                desc: "Visit the official website for firm information, services, and contact details.",
+              },
+              {
+                name: "Twitter",
+                handle: "@UHOlawclub",
+                url: "https://www.twitter.com/UHOlawclub",
+                desc: "Daily commentary on law, constitutional rights, and public notices from the chambers.",
+              },
+              {
+                name: "Instagram",
+                handle: "@uholawclub",
+                url: "https://www.instagram.com/uholawclub",
+                desc: "Behind the scenes in chambers, civic action events, and photos from tree plantation drives.",
+              },
+              {
+                name: "LinkedIn",
+                handle: "UHO Law Club",
+                url: "https://www.linkedin.com/company/UHOLawclub",
+                desc: "Professional updates, company profile, and practice announcements.",
+              },
             ].map((s, i) => (
-              <FadeIn key={s.name} delay={i * 80} className="group bg-paper transition-colors hover:bg-navy/[0.04] min-w-[280px] max-w-[320px] flex-shrink-0 snap-start">
+              <FadeIn
+                key={s.name}
+                delay={i * 80}
+                className="group bg-paper transition-colors hover:bg-navy/[0.04] min-w-[280px] max-w-[320px] flex-shrink-0 snap-start"
+              >
                 <a
                   href={s.url}
                   target="_blank"
@@ -479,14 +642,22 @@ function Index() {
                       </svg>
                     )}
                     {s.name === "Instagram" && (
-                      <svg className="h-5 w-5 fill-none stroke-current" strokeWidth="2" viewBox="0 0 24 24">
+                      <svg
+                        className="h-5 w-5 fill-none stroke-current"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                       </svg>
                     )}
                     {s.name === "Website" && (
-                      <svg className="h-5 w-5 fill-none stroke-current" strokeWidth="2" viewBox="0 0 24 24">
+                      <svg
+                        className="h-5 w-5 fill-none stroke-current"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
                         <circle cx="12" cy="12" r="10" />
                         <path d="M2 12h20" />
                         <path d="M12 2a15 15 0 0 1 0 20" />
@@ -500,7 +671,9 @@ function Index() {
                     )}
                   </div>
                   <h3 className="mt-6 font-serif text-2xl text-navy">{s.name}</h3>
-                  <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-steel">{s.handle}</p>
+                  <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-steel">
+                    {s.handle}
+                  </p>
                   <p className="mt-4 text-sm leading-relaxed text-midnight/70">{s.desc}</p>
                   <span className="mt-6 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-navy/50 transition-colors group-hover:text-gold">
                     Visit profile →
@@ -513,12 +686,13 @@ function Index() {
       </section>
 
       {/* UHO HISTORY — animated chapters */}
-      < section className="border-y border-border bg-midnight overflow-hidden" >
+      <section className="border-y border-border bg-midnight overflow-hidden">
         <div className="mx-auto max-w-7xl px-6 py-20">
-
           {/* Header */}
           <FadeIn className="mb-14 border-b border-border pb-10">
-            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">{t("history.tag")}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">
+              {t("history.tag")}
+            </p>
             <h2 className="mt-3 font-serif text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] text-paper">
               {t("history.title")}
             </h2>
@@ -571,9 +745,13 @@ function Index() {
             ].map((ch, i) => (
               <FadeIn key={ch.n} delay={i * 80} className="grid gap-px bg-border md:grid-cols-12">
                 <div className="bg-midnight p-8 md:p-10 md:col-span-3">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Chapter {ch.n}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">
+                    Chapter {ch.n}
+                  </div>
                   <div className="mt-4 font-serif text-2xl text-paper leading-snug">{ch.title}</div>
-                  <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{ch.period}</div>
+                  <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                    {ch.period}
+                  </div>
                   <div className="mt-8 h-px w-12 bg-gold/40" />
                 </div>
                 <div className="bg-navy/40 p-8 md:p-10 md:col-span-9 space-y-4 text-base leading-[1.85] text-paper/80">
@@ -590,7 +768,10 @@ function Index() {
           </div>
 
           {/* Motto banner */}
-          <FadeIn delay={320} className="mt-px bg-navy border border-border/60 px-8 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <FadeIn
+            delay={320}
+            className="mt-px bg-navy border border-border/60 px-8 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+          >
             <div className="flex items-center gap-4">
               <div className="h-px w-8 bg-gold shrink-0" />
               <p className="font-serif text-xl text-paper italic">{t("history.motto")}</p>
@@ -600,65 +781,99 @@ function Index() {
             </p>
           </FadeIn>
         </div>
-      </section >
+      </section>
 
       {/* PHILOSOPHY / PULL QUOTE */}
-      < section className="paper-section" >
+      <section className="paper-section">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:grid-cols-12">
           <div className="md:col-span-5">
-            <img src={advocateImg2} alt="Advocate Avinash Pathak outside the court" width={1280} height={1920} loading="lazy" className="w-full object-cover" />
+            <img
+              src={advocateImg2}
+              alt="Advocate Avinash Pathak outside the court"
+              width={1280}
+              height={1920}
+              loading="lazy"
+              className="w-full object-cover"
+            />
           </div>
           <div className="md:col-span-7 flex flex-col justify-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-steel">{t("philosophy.tag")}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-steel">
+              {t("philosophy.tag")}
+            </p>
             <blockquote className="mt-6 font-serif text-3xl leading-[1.25] md:text-4xl text-navy">
               {t("philosophy.quote")}
             </blockquote>
-            <div className="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-midnight">{t("philosophy.author")}</div>
+            <div className="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-midnight">
+              {t("philosophy.author")}
+            </div>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link to="/about" className="inline-flex items-center gap-3 bg-navy px-6 py-3 text-sm text-paper hover:bg-midnight">
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-3 bg-navy px-6 py-3 text-sm text-paper hover:bg-midnight"
+              >
                 {t("philosophy.bio")}
               </Link>
-              <Link to="/books" className="inline-flex items-center gap-2 border-b border-navy/40 pb-1 text-sm text-navy hover:border-navy">
+              <Link
+                to="/books"
+                className="inline-flex items-center gap-2 border-b border-navy/40 pb-1 text-sm text-navy hover:border-navy"
+              >
                 {t("philosophy.writings")}
               </Link>
             </div>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* INITIATIVES */}
-      < section className="mx-auto max-w-7xl px-6 py-24" >
+      <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="grid gap-12 md:grid-cols-2">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">{t("initiatives.tag")}</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">
+              {t("initiatives.tag")}
+            </p>
             <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">
               {t("initiatives.title")}
             </h2>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
               {t("initiatives.desc")}
             </p>
-            <Link to="/initiatives" className="mt-8 inline-flex items-center gap-2 border-b border-paper/40 pb-1 text-sm hover:border-paper">
+            <Link
+              to="/initiatives"
+              className="mt-8 inline-flex items-center gap-2 border-b border-paper/40 pb-1 text-sm hover:border-paper"
+            >
               {t("initiatives.read")}
             </Link>
           </div>
           <div className="relative">
-            <img src={tree} alt="Plant a tree on your birthday" width={1200} height={900} loading="lazy" className="w-full grayscale-[.2]" />
+            <img
+              src={tree}
+              alt="Plant a tree on your birthday"
+              width={1200}
+              height={900}
+              loading="lazy"
+              className="w-full grayscale-[.2]"
+            />
             <div className="absolute bottom-4 left-4 bg-navy/90 px-4 py-3 border border-border">
-              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">{t("initiatives.movement")}</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
+                {t("initiatives.movement")}
+              </div>
               <div className="mt-1 font-serif text-lg text-paper">{t("initiatives.plantTree")}</div>
             </div>
           </div>
         </div>
-      </section >
+      </section>
 
       {/* CONTACT + MAP + FORM */}
-      < section className="border-t border-border bg-midnight" >
+      <section className="border-t border-border bg-midnight">
         <div className="mx-auto max-w-7xl px-6 py-20">
-
           {/* Section header */}
           <div className="mb-12">
-            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">{t("contact.tag")}</p>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">{t("contact.title")}</h2>
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-gold">
+              {t("contact.tag")}
+            </p>
+            <h2 className="mt-3 font-serif text-4xl md:text-5xl text-paper">
+              {t("contact.title")}
+            </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
               {t("contact.desc")}
             </p>
@@ -669,42 +884,70 @@ function Index() {
             {/* Map */}
             <div className="md:col-span-7 overflow-hidden">
               <div className="border-b border-border bg-navy px-5 py-2.5 flex items-center justify-between">
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold">{t("contact.findUs")}</span>
-              
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold">
+                  {t("contact.findUs")}
+                </span>
               </div>
-               <img src={mapImage} alt="UHO Law Club Location" />
+              <img src={mapImage} alt="UHO Law Club Location" />
             </div>
 
             {/* Contact details */}
             <div className="bg-navy p-8 md:col-span-5 flex flex-col justify-between">
               <div className="space-y-6">
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.address")}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                    {t("contact.address")}
+                  </div>
                   <div className="mt-2 font-serif text-lg text-paper leading-snug">
                     UHO Law Club · <br />
-                    Near Bundelkhand University, Jhansi<br />
+                    Near Bundelkhand University, Jhansi
+                    <br />
                     Uttar Pradesh, India
                   </div>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.hours")}</div>
-                  <div className="mt-2 font-serif text-lg text-paper">{t("contact.hoursValue")}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                    {t("contact.hours")}
+                  </div>
+                  <div className="mt-2 font-serif text-lg text-paper">
+                    {t("contact.hoursValue")}
+                  </div>
                   <div className="mt-1 text-xs text-muted-foreground">{t("contact.bail")}</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.directLine")}</div>
-                  <a href="tel:+919532660984" className="mt-2 block font-serif text-lg text-paper hover:text-gold">+91 9532660984</a>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                    {t("contact.directLine")}
+                  </div>
+                  <a
+                    href="tel:+919532660984"
+                    className="mt-2 block font-serif text-lg text-paper hover:text-gold"
+                  >
+                    +91 9532660984
+                  </a>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("contact.emailLabel")}</div>
-                  <a href="mailto:uholawclub@gmail.com" className="mt-2 block text-sm text-paper/80 hover:text-gold break-all">uholawclub@gmail.com</a>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                    {t("contact.emailLabel")}
+                  </div>
+                  <a
+                    href="mailto:uholawclub@gmail.com"
+                    className="mt-2 block text-sm text-paper/80 hover:text-gold break-all"
+                  >
+                    uholawclub@gmail.com
+                  </a>
                 </div>
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link to="/appointment" className="inline-flex items-center gap-2 bg-paper px-5 py-2.5 text-sm text-navy hover:bg-gold">
+                <Link
+                  to="/appointment"
+                  className="inline-flex items-center gap-2 bg-paper px-5 py-2.5 text-sm text-navy hover:bg-gold"
+                >
                   {t("contact.bookConsultation")}
                 </Link>
-                <Link to="/contact" className="inline-flex items-center gap-2 border border-paper/30 px-5 py-2.5 text-sm text-paper hover:bg-paper/5">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 border border-paper/30 px-5 py-2.5 text-sm text-paper hover:bg-paper/5"
+                >
                   {t("contact.fullContactPage")}
                 </Link>
               </div>
@@ -714,7 +957,7 @@ function Index() {
           {/* Contact form */}
           <ContactForm />
         </div>
-      </section >
+      </section>
     </>
   );
 }
