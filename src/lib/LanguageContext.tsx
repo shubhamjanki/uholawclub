@@ -29,7 +29,7 @@ const en: TranslationDict = {
   "nav.appointment": "Appointment",
   "nav.contact": "Contact",
   "header.title": "UHO Law Club",
-  "header.subtitle": "All Service law firm Global",
+  "header.subtitle": "All Service  Global law firm",
   "header.location": "JHANSI, INDIA — GLOBAL PRACTICE",
 
   // ── Booking form (index hero) ──
@@ -540,8 +540,8 @@ function LanguagePopup({
                   key={opt.code}
                   onClick={() => onSelect(opt.code)}
                   className={`flex w-full items-center gap-4 border px-5 py-4 text-left transition-all duration-200 ${selected === opt.code
-                      ? "border-gold bg-gold/10 text-paper shadow-[inset_0_0_20px_rgba(201,168,76,0.08)]"
-                      : "border-border/60 bg-navy/40 text-paper/80 hover:border-paper/30 hover:bg-navy/60"
+                    ? "border-gold bg-gold/10 text-paper shadow-[inset_0_0_20px_rgba(201,168,76,0.08)]"
+                    : "border-border/60 bg-navy/40 text-paper/80 hover:border-paper/30 hover:bg-navy/60"
                     }`}
                 >
                   <span className="text-2xl">{opt.flag}</span>
@@ -629,8 +629,8 @@ export function LanguageSwitcher() {
                   setOpen(false);
                 }}
                 className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition-colors ${lang === opt.code
-                    ? "bg-gold/15 text-gold"
-                    : "text-paper/80 hover:bg-paper/5 hover:text-paper"
+                  ? "bg-gold/15 text-gold"
+                  : "text-paper/80 hover:bg-paper/5 hover:text-paper"
                   }`}
               >
                 <span className="text-lg">{opt.flag}</span>

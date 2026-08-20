@@ -11,7 +11,7 @@ import React, { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import uhoLogoImg from "../assets/WhatsApp Image 2026-07-29 at 19.28.20 (4).jpeg";
-import { reportLovableError } from "../lib/lovable-error-reporting";
+
 import { BottomNav } from "../components/BottomNav";
 import { LegalModals, type LegalModalType } from "../components/LegalModals";
 import logo1 from "../assets/WhatsApp Image 2026-07-29 at 19.28.20 (4).jpeg";
@@ -41,7 +41,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    console.error("Runtime error:", error);
   }, [error]);
 
   return (
@@ -95,7 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: logo1, type: "image/x-icon" },
+      { rel: "icon", href: logo1, type: "image/jpeg" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
