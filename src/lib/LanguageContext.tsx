@@ -7,12 +7,11 @@ export interface LangOption {
   code: Lang;
   label: string;
   nativeLabel: string;
-  flag: string;
 }
 
 export const LANGUAGES: LangOption[] = [
-  { code: "en", label: "English", nativeLabel: "English", flag: "🇬🇧" },
-  { code: "hi", label: "Hindi", nativeLabel: "हिन्दी", flag: "🇮🇳" },
+  { code: "en", label: "English", nativeLabel: "English" },
+  { code: "hi", label: "Hindi", nativeLabel: "हिन्दी" },
 ];
 
 // ─── Translation dictionaries ──────────────────────────────────────
@@ -489,47 +488,23 @@ function LanguagePopup({
         style={{ animation: "langSlideUp 0.4s ease" }}
       >
         <div
-          className="relative w-full max-w-md overflow-hidden border border-gold/30 bg-gradient-to-b from-[#0f1b3d] to-[#081023] shadow-2xl"
-          onClick={(e) => e.stopPropagation()}
+          className="relative w-full max-w-md border border-white/20 bg-black p-8 shadow-2xl"
+          style={{ animation: "langSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
         >
-          {/* Gold accent bar */}
-          <div className="h-1 bg-gradient-to-r from-gold/60 via-gold to-gold/60" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-white" />
 
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center text-paper/50 hover:text-paper transition-colors"
+            className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center text-white/50 hover:text-white transition-colors"
             aria-label="Close"
           >
             ✕
           </button>
 
-          <div className="px-8 pt-8 pb-6">
-            {/* Globe icon */}
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-gold/30 bg-navy/80">
-              <svg
-                className="h-8 w-8 text-gold"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 21a9 9 0 100-18 9 9 0 000 18z"
-                />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.6 9h16.8M3.6 15h16.8" />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 3a15 15 0 014 9 15 15 0 01-4 9 15 15 0 01-4-9 15 15 0 014-9z"
-                />
-              </svg>
-            </div>
-
-            <h2 className="text-center font-serif text-2xl text-paper">{t("langPopup.title")}</h2>
-            <p className="mt-2 text-center text-sm text-muted-foreground">
+          <div className="mt-4">
+            <h2 className="text-center font-serif text-2xl text-white">{t("langPopup.title")}</h2>
+            <p className="mt-2 text-center text-sm text-white/60">
               {t("langPopup.subtitle")}
             </p>
 
@@ -540,33 +515,34 @@ function LanguagePopup({
                   key={opt.code}
                   onClick={() => onSelect(opt.code)}
                   className={`flex w-full items-center gap-4 border px-5 py-4 text-left transition-all duration-200 ${selected === opt.code
-                    ? "border-gold bg-gold/10 text-paper shadow-[inset_0_0_20px_rgba(201,168,76,0.08)]"
-                    : "border-border/60 bg-navy/40 text-paper/80 hover:border-paper/30 hover:bg-navy/60"
+                    ? "border-white bg-white text-black"
+                    : "border-white/20 bg-black text-white hover:border-white"
                     }`}
                 >
-                  <span className="text-2xl">{opt.flag}</span>
                   <div className="flex-1">
                     <div className="font-medium text-sm">{opt.label}</div>
-                    <div className="text-xs text-muted-foreground">{opt.nativeLabel}</div>
+                    <div className="text-xs opacity-60">{opt.nativeLabel}</div>
                   </div>
                   {/* Radio indicator */}
                   <div
-                    className={`flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors ${selected === opt.code ? "border-gold" : "border-paper/30"
+                    className={`flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors ${selected === opt.code ? "border-black" : "border-white/30"
                       }`}
                   >
-                    {selected === opt.code && <div className="h-2.5 w-2.5 rounded-full bg-gold" />}
+                    {selected === opt.code && <div className="h-2.5 w-2.5 rounded-full bg-black" />}
                   </div>
                 </button>
               ))}
             </div>
 
-            {/* Confirm button */}
-            <button
-              onClick={onConfirm}
-              className="mt-6 w-full bg-paper px-6 py-3 text-sm font-medium text-navy transition-colors hover:bg-gold"
-            >
-              {t("langPopup.continue")} →
-            </button>
+            {/* Action buttons */}
+            <div className="mt-8">
+              <button
+                onClick={handleContinue}
+                className="w-full bg-white px-6 py-4 text-sm font-semibold uppercase tracking-wider text-black transition-all hover:bg-gray-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+              >
+                {t("langPopup.continue")} →
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -596,11 +572,10 @@ export function LanguageSwitcher() {
     <div className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1.5 border border-navy/40 bg-navy/10 px-1.5 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-navy transition-all hover:bg-navy hover:text-[#d4af37]"
+        className="inline-flex items-center gap-1.5 border border-white bg-transparent px-2.5 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-white transition-all hover:bg-white hover:text-black"
         aria-label={t("langSwitch.label")}
       >
-        <span className="text-base leading-none">{current.flag}</span>
-        <span className="hidden sm:inline">{current.code.toUpperCase()}</span>
+        <span className="sm:inline">{current.code.toUpperCase()}</span>
         <svg
           className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}
           fill="none"
@@ -617,10 +592,9 @@ export function LanguageSwitcher() {
         <>
           <div className="fixed inset-0 z-30" onClick={() => setOpen(false)} aria-hidden />
           <div
-            className="absolute right-0 top-full z-40 mt-2 min-w-[180px] overflow-hidden border border-gold/30 bg-[#0f1b3d] shadow-xl"
+            className="absolute right-0 top-full z-40 mt-2 min-w-[140px] overflow-hidden border border-border bg-black shadow-xl"
             style={{ animation: "langSlideUp 0.2s ease" }}
           >
-            <div className="h-0.5 bg-gradient-to-r from-gold/40 via-gold to-gold/40" />
             {LANGUAGES.map((opt) => (
               <button
                 key={opt.code}
@@ -629,11 +603,10 @@ export function LanguageSwitcher() {
                   setOpen(false);
                 }}
                 className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition-colors ${lang === opt.code
-                  ? "bg-gold/15 text-gold"
-                  : "text-paper/80 hover:bg-paper/5 hover:text-paper"
+                  ? "bg-white text-black"
+                  : "text-white/80 hover:bg-white/10 hover:text-white"
                   }`}
               >
-                <span className="text-lg">{opt.flag}</span>
                 <div>
                   <div className="font-medium">{opt.label}</div>
                   <div className="text-[10px] text-muted-foreground">{opt.nativeLabel}</div>
