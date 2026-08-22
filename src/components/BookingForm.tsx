@@ -6,8 +6,10 @@ import { submitAppointment } from "../lib/appointmentFn";
 
 /** Map the select option text → numeric amount */
 const TIER_AMOUNTS: Record<string, number> = {
-  "Legal consultation — ₹11,000": 11000,
-  "UHO Card Holder — ₹1100": 1100,
+  "T-1 Services (₹100000)": 100000,
+  "T-2 Services (₹ 31000)": 31000,
+  "T-3 Services (₹11000)": 11000,
+  "UHO Card Holder (Saturday)₹1100": 1100,
 };
 
 const UPI_ID = "uholawclub@sbi";
@@ -169,7 +171,7 @@ export function SharedBookingForm() {
 
   const form = useForm({
     defaultValues: {
-      name: "", email: "", phone: "", date: "", time: "", mode: "Online — video call (Zoom / Google Meet)", tier: "Legal consultation — ₹11,000", note: "", honeypot: ""
+      name: "", email: "", phone: "", date: "", time: "", mode: "Online — video call (Zoom / Google Meet)", tier: "T-3 Services (₹11000)", note: "", honeypot: ""
     } as AppointmentFormValues,
     validators: {
       onChange: appointmentSchema,
@@ -263,7 +265,7 @@ export function SharedBookingForm() {
                   required
                   className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none"
                 />
-                {field.state.meta.errors ? <em className="text-red-400 text-xs mt-1 block">{field.state.meta.errors.join(', ')}</em> : null}
+                {field.state.meta.errors?.length ? <em className="text-red-400 text-xs mt-1 block">{field.state.meta.errors.map(e => typeof e === 'string' ? e : (e as any).message || String(e)).join(', ')}</em> : null}
               </div>
             )}
           </form.Field>
@@ -278,7 +280,7 @@ export function SharedBookingForm() {
                   required
                   className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper placeholder:text-muted-foreground focus:border-gold focus:outline-none"
                 />
-                {field.state.meta.errors ? <em className="text-red-400 text-xs mt-1 block">{field.state.meta.errors.join(', ')}</em> : null}
+                {field.state.meta.errors?.length ? <em className="text-red-400 text-xs mt-1 block">{field.state.meta.errors.map(e => typeof e === 'string' ? e : (e as any).message || String(e)).join(', ')}</em> : null}
               </div>
             )}
           </form.Field>
@@ -355,8 +357,10 @@ export function SharedBookingForm() {
                   onChange={(e) => field.handleChange(e.target.value)}
                   className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none"
                 >
-                  <option>Legal consultation — ₹11,000</option>
-                  <option>UHO Card Holder — ₹1100</option>
+                  <option>T-1 Services (₹100000)</option>
+                  <option>T-2 Services (₹ 31000)</option>
+                  <option>T-3 Services (₹11000)</option>
+                  <option>UHO Card Holder (Saturday)₹1100</option>
                 </select>
               </>
             )}
@@ -374,7 +378,7 @@ export function SharedBookingForm() {
                   required
                   className="mt-2 w-full border border-border bg-navy px-4 py-3 text-sm text-paper focus:border-gold focus:outline-none"
                 />
-                {field.state.meta.errors ? <em className="text-red-400 text-xs mt-1 block">{field.state.meta.errors.join(', ')}</em> : null}
+                {field.state.meta.errors?.length ? <em className="text-red-400 text-xs mt-1 block">{field.state.meta.errors.map(e => typeof e === 'string' ? e : (e as any).message || String(e)).join(', ')}</em> : null}
               </>
             )}
           </form.Field>
