@@ -5,6 +5,11 @@ import tree from "../assets/tree.jpg";
 import advocateImg2 from "../assets/WhatsApp Image 2026-07-29 at 19.28.22.jpeg";
 import { useLanguage } from "../lib/LanguageContext";
 import mapImage from "../assets/map.jpeg";
+import { useForm } from "@tanstack/react-form";
+import { appointmentSchema, type AppointmentFormValues } from "../lib/schema";
+import { submitAppointment } from "../lib/appointmentFn";
+import { SharedBookingForm } from "../components/BookingForm";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -74,143 +79,6 @@ function FadeIn({
   );
 }
 
-/* ─── UPI helpers (shared with BookingForm & ContactForm) ─────────── */
-const UPI_ID = "uho@sbi";
-const UPI_NAME = "UHO Law Club";
-
-const TIER_AMOUNTS: Record<string, number> = {
-  "Legal consultation — ₹11,000": 11000,
-  "UHO Card Holder — ₹1100": 1100,
-  // "Writer engagement — ₹1,00,000": 100000,
-  // "Not sure yet": 0,
-};
-
-function buildUpiUrl(amount: number, note: string) {
-  const params = new URLSearchParams({
-    pa: UPI_ID,
-    pn: UPI_NAME,
-    am: amount.toFixed(2),
-    cu: "INR",
-    tn: note,
-  });
-  return `upi://pay?${params.toString()}`;
-}
-
-function UpiPaymentModal({
-  tier,
-  amount,
-  name,
-  onClose,
-  onDone,
-}: {
-  tier: string;
-  amount: number;
-  name: string;
-  onClose: () => void;
-  onDone: () => void;
-}) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const upiUrl = buildUpiUrl(amount, `${tier} - ${name}`);
-
-  useEffect(() => {
-    if (canvasRef.current && amount > 0) {
-      QRCode.toCanvas(canvasRef.current, upiUrl, {
-        width: 220,
-        margin: 2,
-        color: { dark: "#0a0f1e", light: "#f5f0e8" },
-      });
-    }
-  }, [upiUrl, amount]);
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm px-4">
-      <div className="relative w-full max-w-md border border-gold/60 bg-midnight shadow-2xl">
-        {/* Header */}
-        <div className="border-b border-border px-8 py-5 flex items-center justify-between">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Payment</p>
-            <h2 className="mt-1 font-serif text-xl text-paper">Scan to Pay via UPI</h2>
-          </div>
-          <button
-            onClick={onClose}
-            className="ml-4 text-muted-foreground hover:text-paper transition-colors text-xl leading-none"
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
-        {/* Body */}
-        <div className="px-8 py-7 flex flex-col items-center gap-5">
-          {/* Amount badge */}
-          <div className="w-full border border-border bg-navy/60 px-5 py-4 text-center">
-            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-              {tier}
-            </p>
-            {amount > 0 ? (
-              <p className="mt-2 font-serif text-4xl text-gold">
-                ₹{amount.toLocaleString("en-IN")}
-              </p>
-            ) : (
-              <p className="mt-2 font-serif text-lg text-paper/70">Amount to be confirmed</p>
-            )}
-            <p className="mt-1 font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
-              UPI · {UPI_ID}
-            </p>
-          </div>
-          {/* QR */}
-          {amount > 0 ? (
-            <div className="border border-border bg-paper p-3">
-              <canvas ref={canvasRef} />
-              <p className="mt-2 text-center font-mono text-[9px] text-navy/60 uppercase tracking-[0.2em]">
-                Scan with any UPI app
-              </p>
-            </div>
-          ) : (
-            <div className="border border-border bg-navy/40 px-6 py-8 text-center text-sm text-paper/60">
-              Payment amount will be shared after we review your requirement.
-            </div>
-          )}
-          {/* Deep-link */}
-          {amount > 0 && (
-            <a
-              href={upiUrl}
-              className="w-full inline-flex items-center justify-center gap-3 bg-[#00897b] px-6 py-3 text-sm font-medium text-white hover:bg-[#00695c] transition-colors"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                className="h-5 w-5 fill-white"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-1.25 17.5l-4-4 1.41-1.41 2.59 2.58 5.59-5.58L17.75 10.5l-7 7z" />
-              </svg>
-              Open UPI App to Pay
-            </a>
-          )}
-          {amount > 0 && (
-            <p className="text-center font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground">
-              GPay · PhonePe · Paytm · BHIM · Any UPI App
-            </p>
-          )}
-          {/* Confirm */}
-          <div className="w-full border-t border-border pt-5 flex flex-col gap-3">
-            <button
-              onClick={onDone}
-              className="w-full bg-paper px-6 py-3 text-sm text-navy hover:bg-gold transition-colors"
-            >
-              I've paid — confirm my appointment →
-            </button>
-            <p className="text-center text-[11px] text-muted-foreground leading-relaxed">
-              After payment, share the UTR on WhatsApp or email.
-              <br />
-              <span className="text-paper/60">uholawclub@gmail.com · +91 95326 60984</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function ContactForm() {
   const [sent, setSent] = useState(false);
   const { t } = useLanguage();
@@ -253,7 +121,7 @@ function ContactForm() {
             <FormField label={t("form.email")} name="email" type="email" required />
             <FormField label={t("form.phone")} name="phone" type="tel" />
             <FormField label={t("contact.subject")} name="subject" />
-            
+
             <div className="flex flex-col gap-2">
               <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/90">
                 {t("contact.yourMessage")}
@@ -266,7 +134,7 @@ function ContactForm() {
                 placeholder={t("contact.messagePlaceholder")}
               />
             </div>
-            
+
             <button
               type="submit"
               className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-md bg-black px-6 py-3 sm:py-4 text-sm font-semibold text-white transition-all hover:bg-black/80 active:scale-[0.98]"
@@ -286,12 +154,18 @@ function FormField({
   type = "text",
   required = false,
   placeholder = "",
+  value,
+  onChange,
+  error,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
   placeholder?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -303,8 +177,11 @@ function FormField({
         type={type}
         required={required}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
         className="w-full rounded-md border border-border bg-white px-3 py-2.5 sm:px-4 sm:py-3.5 text-sm text-foreground placeholder:text-muted-foreground transition-all focus:border-black/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-black/20"
       />
+      {error ? <em className="text-red-500 text-xs">{error}</em> : null}
     </div>
   );
 }
@@ -317,137 +194,6 @@ function Stat({ n, label }: { n: string; label: string }) {
         {label}
       </div>
     </div>
-  );
-}
-
-function BookingForm() {
-  const [paymentInfo, setPaymentInfo] = useState<{
-    show: boolean;
-    tier: string;
-    amount: number;
-    name: string;
-  }>({ show: false, tier: "", amount: 0, name: "" });
-  const [confirmed, setConfirmed] = useState(false);
-  const { t } = useLanguage();
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const tier = (fd.get("tier") as string) || "Legal consultation — ₹11,000";
-    const name = (fd.get("name") as string) || "Client";
-    const amount = TIER_AMOUNTS[tier] ?? 0;
-    setPaymentInfo({ show: true, tier, amount, name });
-  };
-
-  if (confirmed) {
-    return (
-      <div className="border border-gold/50 bg-navy p-8">
-        <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold">Confirmed</div>
-        <h3 className="mt-4 font-serif text-2xl text-paper">
-          Thank you — appointment request received.
-        </h3>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Please share your UPI transaction ID / UTR via WhatsApp or email. The chambers will
-          confirm within one working day.
-        </p>
-        <div className="mt-6 flex gap-4 flex-wrap">
-          <a
-            href="https://wa.me/919532660984"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 border border-green-500/60 bg-green-900/20 px-4 py-2 text-xs text-green-400 hover:bg-green-900/40 transition-colors"
-          >
-            WhatsApp UTR →
-          </a>
-          <a
-            href="mailto:uholawclub@gmail.com"
-            className="inline-flex items-center gap-2 border border-border px-4 py-2 text-xs text-paper hover:border-gold hover:text-gold transition-colors"
-          >
-            Email UTR →
-          </a>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      {paymentInfo.show && (
-        <UpiPaymentModal
-          tier={paymentInfo.tier}
-          amount={paymentInfo.amount}
-          name={paymentInfo.name}
-          onClose={() => setPaymentInfo((p) => ({ ...p, show: false }))}
-          onDone={() => {
-            setPaymentInfo((p) => ({ ...p, show: false }));
-            setConfirmed(true);
-          }}
-        />
-      )}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6">
-        <FormField label={t("form.name")} name="name" required />
-        <FormField label={t("form.email")} name="email" type="email" required />
-        <FormField label={t("form.phone")} name="phone" type="tel" />
-        <FormField label={t("form.date")} name="date" type="date" />
-
-        {/* Mode */}
-        <div className="flex flex-col gap-2">
-          <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/90">
-            {t("form.mode")}
-          </label>
-          <select
-            name="mode"
-            className="w-full appearance-none rounded-md border border-border bg-white px-3 py-2.5 sm:px-4 sm:py-3.5 text-sm text-foreground transition-all focus:border-black/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-black/20"
-          >
-            <option>{t("form.modeOnline")}</option>
-            <option>{t("form.modeInPerson")}</option>
-            <option>{t("form.modePhone")}</option>
-          </select>
-        </div>
-
-        {/* Service */}
-        <div className="flex flex-col gap-2">
-          <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/90">
-            {t("form.tier")}
-          </label>
-          <select
-            name="tier"
-            className="w-full appearance-none rounded-md border border-border bg-white px-3 py-2.5 sm:px-4 sm:py-3.5 text-sm text-foreground transition-all focus:border-black/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-black/20"
-          >
-            <option>{t("form.tierLegal")}</option>
-            <option>{t("form.tierUHO")}</option>
-          </select>
-        </div>
-
-        {/* Note */}
-        <div className="flex flex-col gap-2">
-          <label className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/90">
-            {t("form.note")}
-          </label>
-          <textarea
-            name="note"
-            rows={2}
-            required
-            placeholder={t("form.notePlaceholder")}
-            className="w-full resize-y rounded-md border border-border bg-white px-3 py-2.5 sm:px-4 sm:py-3.5 text-sm text-foreground placeholder:text-muted-foreground transition-all focus:border-black/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-black/20"
-          />
-        </div>
-
-        {/* Button */}
-        <div className="mt-1 flex flex-col gap-3">
-          <button
-            type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-black px-6 py-3 sm:py-4 text-sm font-semibold text-white transition-all hover:bg-black/80 active:scale-[0.98]"
-          >
-            Send Appointment &amp; Pay via UPI →
-          </button>
-          
-          <p className="text-center text-[11px] text-muted-foreground">
-            {t("form.confidential")}
-          </p>
-        </div>
-      </form>
-    </>
   );
 }
 
@@ -467,8 +213,8 @@ function Index() {
       <section className="border-b border-border bg-midnight">
         <div className="mx-auto grid max-w-7xl gap-px bg-border px-0 md:grid-cols-12">
           {/* Left — booking form */}
-          <div className="bg-white/60 p-5 md:p-8 md:col-span-8">
-            <BookingForm />
+          <div className="p-0 md:col-span-8">
+            <SharedBookingForm />
           </div>
 
           {/* Right — appointment info */}
