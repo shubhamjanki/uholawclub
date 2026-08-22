@@ -145,9 +145,9 @@ function Appointment() {
                 <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
                   UPI Payment
                 </div>
-                <p className="mt-2 font-serif text-lg text-paper">{UPI_ID}</p>
+                <p className="mt-2 font-serif text-lg text-paper">uholawclub@sbi</p>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  State Bank of India · {UPI_NAME}
+                  State Bank of India · UHO Law Club
                 </p>
                 <p className="mt-3 text-xs text-paper/60 leading-relaxed">
                   A QR code &amp; UPI deep-link will appear after you send the appointment request.
